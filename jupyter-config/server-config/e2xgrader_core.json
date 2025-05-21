@@ -1,0 +1,7 @@
+{
+  "ServerApp": {
+    "jpserver_extensions": {
+      "e2xgrader_core": true
+    }
+  }
+}

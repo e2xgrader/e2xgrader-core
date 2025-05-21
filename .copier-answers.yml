@@ -1,0 +1,15 @@
+# Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
+_commit: v4.3.8
+_src_path: https://github.com/jupyterlab/extension-template
+author_email: tim.metzler@h-brs.de
+author_name: Tim Metzler
+has_binder: false
+has_settings: true
+kind: server
+labextension_name: '@e2xgrader/core'
+project_short_description: A JupyterLab extension providing core functionality for
+    e2xgrader
+python_name: e2xgrader_core
+repository: https://github.com/e2xgrader/e2xgrader-core
+test: true
+
