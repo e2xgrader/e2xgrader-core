@@ -1,0 +1,17 @@
+.e2xgrader-CellToolbar {
+  margin-left: calc(
+    var(--jp-cell-prompt-width) + var(--jp-code-padding) + 3 *
+      var(--jp-border-width)
+  );
+  max-width: calc(
+    100% -
+      calc(
+        var(--jp-cell-prompt-width) + var(--jp-code-padding) + 3 *
+          var(--jp-border-width)
+      )
+  );
+  border-radius: 10px 10px 0 0;
+  border-bottom: none;
+  padding-left: 10px;
+  padding-right: 10px;
+}

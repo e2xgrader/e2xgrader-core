@@ -3,3 +3,9 @@
 
     https://jupyterlab.readthedocs.io/en/stable/developer/css.html
 */
+:root {
+  --e2xgrader-light-blue: #d8f3ff;
+  --e2xgrader-blue: #3ac4ff;
+  --e2xgrader-dark-blue: #005d92;
+  --e2xgrader-gray: #eee;
+}
