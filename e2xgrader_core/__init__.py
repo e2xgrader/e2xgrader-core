@@ -5,32 +5,20 @@ except ImportError:
     # in editable mode with pip. It is highly recommended to install
     # the package from a stable release or in editable mode: https://pip.pypa.io/en/stable/topics/local-project-installs/#editable-installs
     import warnings
+
     warnings.warn("Importing 'e2xgrader_core' outside a proper installation.")
     __version__ = "dev"
-from .handlers import setup_handlers
+
+from .server_extension.core import load_jupyter_server_extension
 
 
 def _jupyter_labextension_paths():
-    return [{
-        "src": "labextension",
-        "dest": "@e2xgrader/core"
-    }]
+    return [{"src": "labextension", "dest": "@e2xgrader/core"}]
 
 
 def _jupyter_server_extension_points():
-    return [{
-        "module": "e2xgrader_core"
-    }]
+    return [{"module": "e2xgrader_core"}]
 
 
 def _load_jupyter_server_extension(server_app):
-    """Registers the API handler to receive HTTP requests from the frontend extension.
-
-    Parameters
-    ----------
-    server_app: jupyterlab.labapp.LabApp
-        JupyterLab application instance
-    """
-    setup_handlers(server_app.web_app)
-    name = "e2xgrader_core"
-    server_app.log.info(f"Registered {name} server extension")
+    return load_jupyter_server_extension(server_app)
