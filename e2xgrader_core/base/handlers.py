@@ -26,8 +26,6 @@ class E2xApiHandler(BaseApiHandler):
     @property
     def api(self):
         level = self.log.level
-        api = E2XGraderAPI(
-            self.coursedir, self.authenticator, parent=self.coursedir.parent
-        )
+        api = self.settings["e2xgrader_api"]
         api.log_level = level
         return api
