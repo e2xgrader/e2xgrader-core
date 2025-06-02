@@ -36,6 +36,9 @@ test = [
     "pytest-jupyter[server]>=0.6.0"
 ]
 
+[project.entry-points."nbconvert.exporters"]
+e2xgrader = "e2xgrader_core.exporters.exporter:E2xGraderExporter"
+
 [tool.hatch.version]
 source = "nodejs"
 
@@ -50,6 +53,7 @@ exclude = [".github", "binder"]
 "e2xgrader_core/labextension" = "share/jupyter/labextensions/@e2xgrader/core"
 "install.json" = "share/jupyter/labextensions/@e2xgrader/core/install.json"
 "jupyter-config/server-config" = "etc/jupyter/jupyter_server_config.d"
+"e2xgrader_core/exporters/templates" = "share/jupyter/nbconvert/templates"
 
 [tool.hatch.build.hooks.version]
 path = "e2xgrader_core/_version.py"
@@ -86,3 +90,8 @@ before-build-python = ["jlpm clean:all"]
 
 [tool.check-wheel-contents]
 ignore = ["W002"]
+
+[tool.ruff]
+line-length = 100
+ignore-init-module-imports = true
+select = ["F", "E", "I"]
