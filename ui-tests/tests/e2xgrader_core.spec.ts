@@ -16,6 +16,10 @@ test('should emit an activation console message', async ({ page }) => {
   await page.goto();
 
   expect(
-    logs.filter(s => s === 'JupyterLab extension @e2xgrader/core is activated!')
+    logs.filter(s => s === 'JupyterLab extension @e2xgrader/core:cell-factory is activated!')
+  ).toHaveLength(1);
+
+  expect(
+    logs.filter(s => s === 'JupyterLab extension @e2xgrader/core:cell-registry is activated!')
   ).toHaveLength(1);
 });
