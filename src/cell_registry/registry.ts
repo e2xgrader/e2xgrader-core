@@ -7,7 +7,7 @@ export namespace E2xGraderCellRegistry {
   export type E2xRenderCellFunction = (
     widget: Widget,
     cell: E2XMarkdownCell
-  ) => void;
+  ) => Promise<void> | void;
 
   export interface IE2xGraderCellPlugin {
     cellType: string;
@@ -30,7 +30,7 @@ export namespace E2xGraderCellRegistry {
   }
 
   export class E2xGraderCellRegistry implements IE2xGraderCellRegistry {
-    private _plugins: Map<string, IE2xGraderCellPlugin>;
+    private readonly _plugins: Map<string, IE2xGraderCellPlugin>;
     private readonly _pluginRegistered: Signal<
       this,
       { plugin: IE2xGraderCellPlugin }
