@@ -204,7 +204,6 @@ export class E2XMarkdownCell extends MarkdownCell {
     if (this.contentChanged) {
       this._waitForRender(widget, 2).then((widget: Widget) => {
         this.postRender(widget);
-        this.renderGraderSection(widget);
       });
       this.__lastContent = this.source;
     }
@@ -218,12 +217,13 @@ export class E2XMarkdownCell extends MarkdownCell {
    *
    * @param widget - The widget that has been rendered.
    */
-  protected postRender(widget: Widget): void {
+  protected async postRender(widget: Widget): Promise<void> {
     if (this._registry && this.e2xCellType) {
       const plugin = this._registry.getPlugin(this.e2xCellType);
       if (plugin) {
-        plugin.renderCell(widget, this);
+        await plugin.renderCell(widget, this);
       }
+      this.renderGraderSection(widget);
     }
   }
 
@@ -258,6 +258,11 @@ export class E2XMarkdownCell extends MarkdownCell {
     this._graderSection = grader;
     if (!this.editMode) {
       grader.hidden = true;
+    }
+    // Check whether the grader section already exists
+    const existingGrader = html.querySelector(`.${E2X_GRADER_SETTINGS_CLASS}`);
+    if (existingGrader) {
+      html.removeChild(existingGrader);
     }
     html.appendChild(grader);
   }
