@@ -36,6 +36,10 @@ test = [
     "pytest-cov",
     "pytest-jupyter[server]>=0.6.0"
 ]
+docs = [
+    "sphinx",
+    "pydata-sphinx-theme"
+]
 
 [project.entry-points."nbconvert.exporters"]
 e2xgrader = "e2xgrader_core.exporters.exporter:E2xGraderExporter"
