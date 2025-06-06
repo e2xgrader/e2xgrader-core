@@ -5,9 +5,9 @@ import { ISettingRegistry } from '@jupyterlab/settingregistry';
 import { E2xGraderCellRegistry } from './registry';
 import { E2xGraderMetadata } from '../model/e2xgrader';
 export const E2X_METADATA_KEY = 'extended_cell';
-export const E2X_GRADER_SETTINGS_CLASS = 'e2x_grader_options';
-export const E2X_UNRENDER_BUTTON_CLASS = 'e2x_unrender';
-export const E2X_BUTTON_CLASS = 'e2x_btn';
+export const E2X_GRADER_SETTINGS_CLASS = 'e2xgrader-options';
+export const E2X_UNRENDER_BUTTON_CLASS = 'e2xgrader-unrender';
+export const E2X_BUTTON_CLASS = 'e2xgrader-button';
 
 /**
  * Namespace for E2XMarkdownCell options.

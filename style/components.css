@@ -1,0 +1,9 @@
+.e2xgrader-button {
+  background-color: var(--e2xgrader-light-blue);
+  box-shadow: none;
+  border: 1px solid var(--e2xgrader-blue);
+}
+
+.e2xgrader-button:hover {
+  background-color: var(--e2xgrader-blue);
+}
