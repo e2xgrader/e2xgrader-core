@@ -28,6 +28,155 @@ To remove the extension, execute:
 pip uninstall e2xgrader_core
 ```
 
+## 📦 Cell Filter Plugins
+
+The `E2xGraderExporter` supports a **plugin system** for cell filters using Python entry points.  
+This allows you to register custom filters for specific cell types, which will be automatically discovered and applied during export.
+
+### How It Works
+
+- The exporter looks for entry points in the group `e2xgrader.cell.filters`.
+- Each entry point should provide a tuple: `(cell_type, filter_function)`.
+- All filters registered for a cell type are applied (in registration order) to the cell’s source during export.
+
+### Registering a Custom Cell Filter
+
+1. **Define your filter function** in your package:
+
+    ````python
+    def my_custom_filter(context, source):
+        # Modify and return the cell source as needed
+        return source.upper()
+    ````
+
+2. **Register the filter in your `setup.cfg` or pyproject.toml:**
+
+    **setup.cfg:**
+    ```ini
+    [options.entry_points]
+    e2xgrader.cell.filters =
+        mycelltype = mypackage.filters:my_entry_point
+    ```
+
+    **mypackage/filters.py:**
+    ````python
+    def my_entry_point():
+        from .myfilters import my_custom_filter
+        return "mycelltype", my_custom_filter
+    ````
+
+3. **Install your package** so the entry point is discoverable.
+
+### Example
+
+Suppose you want to uppercase all sources of cells with type `uppercase`:
+
+**mypackage/filters.py:**
+````python
+def uppercase_filter(context, source):
+    return source.upper()
+
+def my_entry_point():
+    return "uppercase", uppercase_filter
+````
+
+**setup.cfg:**
+```ini
+[options.entry_points]
+e2xgrader.cell.filters =
+    uppercase = mypackage.filters:my_entry_point
+```
+
+---
+
+When you run the exporter, it will automatically discover and apply your filter to all cells of type `uppercase`.
+
+
+## 🧩 Custom Cell Preprocessor Plugins
+
+e2xgrader supports a **plugin system for cell preprocessors** using Python entry points.  
+This allows you to register custom preprocessors for specific cell types, which will be automatically discovered and applied during notebook processing.
+
+### How It Works
+
+- The system looks for entry points in the group `e2xgrader.cell.preprocessors`.
+- Each entry point should provide a tuple: `(cell_type, cell_preprocessor)`.
+- If a cell matches the `cell_type`, and the preprocessor object has a method matching the current preprocessor’s snake_case name, that method will be called instead of the default.
+
+### Registering a Custom Cell Preprocessor
+
+1. **Define your preprocessor class or object** with a method named after the nbgrader preprocessor (in snake_case):
+
+    ````python
+    # mypackage/my_preprocessors.py
+    class MyCellPreprocessor:
+        def clear_output(self, self_preprocessor, cell, resources, cell_index):
+            # Custom logic here
+            cell['outputs'] = []
+            return cell, resources
+    ````
+
+2. **Register the preprocessor in your `setup.cfg` or pyproject.toml:**
+
+    **setup.cfg:**
+    ```ini
+    [options.entry_points]
+    e2xgrader.cell.preprocessors =
+        mycelltype = mypackage.my_preprocessors:MyCellPreprocessor
+    ```
+
+    The entry point must return a tuple: `("mycelltype", MyCellPreprocessor())`
+
+    **mypackage/my_preprocessors.py:**
+    ````python
+    class MyCellPreprocessor:
+        def clear_output(self, self_preprocessor, cell, resources, cell_index):
+            # Custom logic
+            return cell, resources
+
+    my_entry_point = ("mycelltype", MyCellPreprocessor)
+    ````
+
+    And in `setup.cfg`:
+    ```ini
+    [options.entry_points]
+    e2xgrader.cell.preprocessors =
+        mycelltype = mypackage.my_preprocessors:my_entry_point
+    ```
+
+3. **Install your package** so the entry point is discoverable.
+
+### Example
+
+Suppose you want to clear outputs only for cells of type `special`:
+
+**mypackage/my_preprocessors.py:**
+````python
+class SpecialCellPreprocessor:
+    def clear_output(self, self_preprocessor, cell, resources, cell_index):
+        cell['outputs'] = []
+        return cell, resources
+
+def special_entry_point():
+    return "special", SpecialCellPreprocessor()
+````
+
+**setup.cfg:**
+```ini
+[options.entry_points]
+e2xgrader.cell.preprocessors =
+    special = mypackage.my_preprocessors:special_entry_point
+```
+
+---
+
+When you run e2xgrader, it will automatically discover and apply your custom preprocessor for all cells of type `special` during the `ClearOutput` step.
+
+---
+
+**See the source code in preprocess_cell.py and __init__.py for details.**
+
+
 ## Troubleshoot
 
 If you are seeing the frontend extension, but it is not working, check
