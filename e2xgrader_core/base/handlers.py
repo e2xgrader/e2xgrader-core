@@ -1,8 +1,6 @@
 from jupyter_server.base.handlers import JupyterHandler as IPythonHandler
 from nbgrader.server_extensions.formgrader.base import BaseApiHandler
 
-from ..api import E2XGraderAPI
-
 
 class E2xHandler(IPythonHandler):
     @property
