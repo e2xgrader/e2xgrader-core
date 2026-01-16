@@ -7,7 +7,6 @@ from ..base import BaseApp, E2xApiHandler
 
 
 class CourseInfoHandler(E2xApiHandler):
-
     @web.authenticated
     def get(self):
         self.finish(
@@ -22,7 +21,6 @@ class CourseInfoHandler(E2xApiHandler):
 
 
 class CourseInfoApp(BaseApp):
-
     def load_app(self):
         self.log.info("Loading the e2xgrader CourseInfo app.")
         self.add_handlers(

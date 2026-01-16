@@ -7,7 +7,6 @@ from traitlets.config import LoggingConfigurable
 
 
 class BaseGrader(LoggingConfigurable):
-
     @abstractmethod
     def determine_grade(
         self, cell: NotebookNode, log: Logger = None

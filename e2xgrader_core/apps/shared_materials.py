@@ -55,7 +55,6 @@ class ListFilesHandler(E2xApiHandler):
 
 
 class SharedMaterialsApp(NbGrader, BaseApp):
-
     shared_paths = List(
         trait=Unicode(),
         default_value=[],
@@ -80,13 +79,8 @@ class SharedMaterialsApp(NbGrader, BaseApp):
         self.initialize([])
         self.log.info("Loading the e2xgrader Shared Materials App.")
         self.update_tornado_settings(
-            dict(
-                e2xhelp_shared_dirs={
-                    str(idx): path for idx, path in enumerate(self.shared_paths)
-                }
-            )
+            dict(e2xhelp_shared_dirs={str(idx): path for idx, path in enumerate(self.shared_paths)})
         )
         self.add_handlers(
-            self.get_static_handlers()
-            + [(r"e2xgrader/api/shared-materials", ListFilesHandler)]
+            self.get_static_handlers() + [(r"e2xgrader/api/shared-materials", ListFilesHandler)]
         )

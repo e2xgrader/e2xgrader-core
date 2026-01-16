@@ -11,9 +11,7 @@ from traitlets.config import Config
 
 
 class E2XGraderAPI(NbGraderAPI):
-    def generate_feedback(
-        self, assignment_id, student_id=None, force=True, hide_cells=False
-    ):
+    def generate_feedback(self, assignment_id, student_id=None, force=True, hide_cells=False):
         """Run ``nbgrader generate_feedback`` for a particular assignment and student.
         Arguments
         ---------
@@ -39,9 +37,7 @@ class E2XGraderAPI(NbGraderAPI):
         c.HTMLExporter.template_name = "feedback"
         c.FilterTests.hide_cells = hide_cells
         if student_id is not None:
-            with temp_attrs(
-                self.coursedir, assignment_id=assignment_id, student_id=student_id
-            ):
+            with temp_attrs(self.coursedir, assignment_id=assignment_id, student_id=student_id):
                 app = GenerateFeedback(coursedir=self.coursedir, parent=self)
                 app.update_config(c)
                 app.force = force
@@ -89,9 +85,7 @@ class E2XGraderAPI(NbGraderAPI):
                 solution_cells.append(
                     dict(
                         name=cell.name,
-                        avg_score=statistics.mean(
-                            [grade.score for grade in grade.grades]
-                        ),
+                        avg_score=statistics.mean([grade.score for grade in grade.grades]),
                         max_score=grade.max_score,
                         needs_manual_grade=int(
                             any([grade.needs_manual_grade for grade in grade.grades])
@@ -198,9 +192,7 @@ class E2XGraderAPI(NbGraderAPI):
                 if db_assignment.duedate:
                     ts = as_timezone(db_assignment.duedate, self.timezone)
                     assignment["display_duedate"] = ts.strftime(self.timestamp_format)
-                    assignment["duedate_notimezone"] = ts.replace(
-                        tzinfo=None
-                    ).isoformat()
+                    assignment["duedate_notimezone"] = ts.replace(tzinfo=None).isoformat()
                 else:
                     assignment["display_duedate"] = None
                     assignment["duedate_notimezone"] = None
@@ -210,8 +202,8 @@ class E2XGraderAPI(NbGraderAPI):
                     assignment["average_code_score"] = gb.average_assignment_code_score(
                         assignment_id
                     )
-                    assignment["average_written_score"] = (
-                        gb.average_assignment_written_score(assignment_id)
+                    assignment["average_written_score"] = gb.average_assignment_written_score(
+                        assignment_id
                     )
                     assignment["average_task_score"] = gb.average_assignment_task_score(
                         assignment_id
@@ -267,9 +259,7 @@ class E2XGraderAPI(NbGraderAPI):
             )
         )
         if os.path.exists(releasedir):
-            assignment["release_path"] = os.path.relpath(
-                releasedir, self.coursedir.root
-            )
+            assignment["release_path"] = os.path.relpath(releasedir, self.coursedir.root)
         else:
             assignment["release_path"] = None
 
@@ -334,9 +324,7 @@ class E2XGraderAPI(NbGraderAPI):
             solution_cell["submission_id"] = submission_id
             # Try loading the annotation for that cell
             try:
-                with open(
-                    os.path.join(annotation_path, f'{solution_cell["name"]}.png'), "rb"
-                ) as f:
+                with open(os.path.join(annotation_path, f"{solution_cell['name']}.png"), "rb") as f:
                     solution_cell["annotation"] = str(base64.b64encode(f.read()))[2:-1]
             except FileNotFoundError:
                 solution_cell["annotation"] = None

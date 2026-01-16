@@ -10,8 +10,7 @@ def is_e2xgrader_cell(cell: NotebookNode) -> bool:
     Check if the cell is an e2xgrader cell.
     """
     return (
-        E2XGRADER_METADATA_KEY in cell.metadata
-        and "type" in cell.metadata[E2XGRADER_METADATA_KEY]
+        E2XGRADER_METADATA_KEY in cell.metadata and "type" in cell.metadata[E2XGRADER_METADATA_KEY]
     )
 
 
@@ -24,9 +23,7 @@ def get_e2xgrader_metadata(cell: NotebookNode) -> Dict[str, Any]:
     return {}
 
 
-def get_e2xgrader_metadata_value(
-    cell: NotebookNode, key: str, default: Any = None
-) -> Any:
+def get_e2xgrader_metadata_value(cell: NotebookNode, key: str, default: Any = None) -> Any:
     """
     Get a specific metadata value from the e2xgrader cell.
     """
