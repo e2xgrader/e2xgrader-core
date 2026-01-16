@@ -172,9 +172,15 @@ export namespace NbgraderCellTypes {
       config: Partial<NbgraderMetadata.INbgraderMetadata>
     ): boolean {
       return Object.entries(config).every(([key, value]) => {
-        return (
-          metadata?.[key as keyof NbgraderMetadata.INbgraderMetadata] === value
-        );
+        const metadataValue =
+          metadata?.[key as keyof NbgraderMetadata.INbgraderMetadata];
+
+        // Treat undefined as false for boolean properties
+        if (typeof value === 'boolean' && metadataValue === undefined) {
+          return value === false;
+        }
+
+        return metadataValue === value;
       });
     }
   }
