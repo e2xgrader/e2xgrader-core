@@ -38,7 +38,6 @@ class E2xGraderExporter(HTMLExporter):
         Custom filter to convert a cell's source code to HTML.
         This method is used to apply custom filters to the cell's source code.
         """
-        print("to_e2xgrader_cell")
         # Apply custom filters here if needed
         cell = context["cell"]
         if not is_e2xgrader_cell(cell):
