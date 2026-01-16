@@ -3,7 +3,7 @@ import glob
 import os
 from importlib.metadata import entry_points
 
-from jinja2.filters import pass_context
+from jinja2.utils import pass_context
 from nbconvert.exporters import HTMLExporter
 
 from ..cells.e2xgrader import get_e2xgrader_cell_type, is_e2xgrader_cell
