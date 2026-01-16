@@ -1,4 +1,16 @@
 {%- extends 'nbconvert/templates/classic/index.html.j2' -%}
+{% block notebook_css %}
+    {{ super() }}
+    <style type="text/css">
+    /* Custom styles for e2xgrader */
+    :root {
+      --e2xgrader-light-blue: #d8f3ff;
+      --e2xgrader-blue: #3ac4ff;
+      --e2xgrader-dark-blue: #005d92;
+      --e2xgrader-gray: #eee;
+    }
+    </style>
+{% endblock notebook_css %}
 
 {% block markdowncell scoped %}
 <div class="cell border-box-sizing text_cell rendered{{ celltags(cell) }}">
