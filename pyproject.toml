@@ -98,5 +98,6 @@ ignore = ["W002"]
 
 [tool.ruff]
 line-length = 100
-ignore-init-module-imports = true
+
+[tool.ruff.lint]
 select = ["F", "E", "I"]
