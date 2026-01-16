@@ -3,7 +3,7 @@ import glob
 import os
 from importlib.metadata import entry_points
 
-from jinja2.filters import pass_context
+from jinja2.utils import pass_context
 from nbconvert.exporters import HTMLExporter
 
 from ..cells.e2xgrader import get_e2xgrader_cell_type, is_e2xgrader_cell
@@ -38,7 +38,6 @@ class E2xGraderExporter(HTMLExporter):
         Custom filter to convert a cell's source code to HTML.
         This method is used to apply custom filters to the cell's source code.
         """
-        print("to_e2xgrader_cell")
         # Apply custom filters here if needed
         cell = context["cell"]
         if not is_e2xgrader_cell(cell):
