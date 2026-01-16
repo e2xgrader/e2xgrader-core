@@ -42,9 +42,7 @@ def preprocess_cell(
         cell_type, cell_preprocessor = entry_point.load()
         if cell_type == e2xgrader_cell_type:
             if hasattr(cell_preprocessor, preprocessor_name):
-                self.log.info(
-                    f"Applying custom {preprocessor_name} for cell type {cell_type}"
-                )
+                self.log.info(f"Applying custom {preprocessor_name} for cell type {cell_type}")
                 cell_preprocessor = getattr(cell_preprocessor, preprocessor_name)
                 return cell_preprocessor(self, cell, resources, cell_index)
     return self.preprocess_cell_original(cell, resources, cell_index)
