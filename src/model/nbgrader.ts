@@ -185,3 +185,17 @@ export namespace NbgraderCellTypes {
     }
   }
 }
+
+export interface NbGraderNotebook {
+  notebook_id: string,
+  path: string
+}
+
+export interface NbGraderAssignment {
+  course_id: string,
+  student_id?: string,
+  assignment_id: string,
+  status: 'released' | 'fetched',
+  path: string,
+  notebooks: NbGraderNotebook[]
+}
