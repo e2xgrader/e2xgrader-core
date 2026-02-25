@@ -1,12 +1,12 @@
 from traitlets import Any, List
 
-from ..apps import CourseInfoApp, E2xGraderApiApp, SharedMaterialsApp
+from ..apps import CourseInfoApp, E2xGraderApiApp, SharedMaterialsApp, AssignmentListApp
 from ..base import BaseExtension
 
 
 class CoreExtension(BaseExtension):
     apps = List(
-        trait=Any(), default_value=[E2xGraderApiApp, CourseInfoApp, SharedMaterialsApp]
+        trait=Any(), default_value=[E2xGraderApiApp, CourseInfoApp, SharedMaterialsApp, AssignmentListApp]
     ).tag(config=True)
 
 
