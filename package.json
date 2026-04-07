@@ -62,6 +62,7 @@
         "@jupyterlab/cells": "^4.4.2",
         "@jupyterlab/codeeditor": "^4.4.2",
         "@jupyterlab/coreutils": "^6.0.0",
+        "@jupyterlab/docmanager-extension": "^4.4.10",
         "@jupyterlab/notebook": "^4.4.2",
         "@jupyterlab/services": "^7.0.0",
         "@jupyterlab/settingregistry": "^4.0.0",
@@ -123,7 +124,11 @@
         },
         "extension": true,
         "outputDir": "e2xgrader_core/labextension",
-        "schemaDir": "schema"
+        "schemaDir": "schema",
+        "disabledExtensions": [
+            "@jupyterlab/notebook-extension:widget-factory",
+            "@jupyterlab/apputils-extension:toolbar-registry"
+        ]
     },
     "eslintIgnore": [
         "node_modules",
