@@ -1,6 +1,4 @@
-import {
-  JupyterFrontEnd
-} from '@jupyterlab/application';
+import { JupyterFrontEnd } from '@jupyterlab/application';
 
 import {
   NotebookWidgetFactory,
@@ -8,15 +6,11 @@ import {
   StaticNotebook,
   ToolbarItems,
   ExecutionIndicator
-}  from '@jupyterlab/notebook';
+} from '@jupyterlab/notebook';
 
-import {
-  IEditorServices
-} from '@jupyterlab/codeeditor';
+import { IEditorServices } from '@jupyterlab/codeeditor';
 
-import {
-  IRenderMimeRegistry
-} from '@jupyterlab/rendermime';
+import { IRenderMimeRegistry } from '@jupyterlab/rendermime';
 
 import {
   createToolbarFactory,
@@ -61,7 +55,8 @@ export function activateWidgetFactory(
   translator_: ITranslator | null
 ): NotebookWidgetFactory.IFactory {
   const translator = translator_ ?? nullTranslator;
-  const sessionContextDialogs = sessionContextDialogs_ ?? new SessionContextDialogs({ translator });
+  const sessionContextDialogs =
+    sessionContextDialogs_ ?? new SessionContextDialogs({ translator });
   const preferKernelOption = PageConfig.getOption('notebookStartsKernel');
 
   // If the option is not set, assume `true`
@@ -76,7 +71,6 @@ export function activateWidgetFactory(
         | DocumentRegistry.IToolbarItem[]
         | IObservableList<DocumentRegistry.IToolbarItem>)
     | undefined;
-
 
   /* Register notebook toolbar widgets
     These Widgets implement toolbar items with special functionalities (everything that is not handled by the default-factory),

@@ -1,15 +1,10 @@
-import {
-  ToolbarRegistry
-} from '@jupyterlab/apputils';
-import {
-  LabIcon
-} from '@jupyterlab/ui-components';
+import { ToolbarRegistry } from '@jupyterlab/apputils';
+import { LabIcon } from '@jupyterlab/ui-components';
 import { CommandRegistry } from '@lumino/commands';
 import { Widget } from '@lumino/widgets';
-import {createDefaultFactory as originalCreateDefaultFactory} from "@jupyterlab/apputils";
-import {ToolbarLabel} from "./toolbarLabel";
+import { createDefaultFactory as originalCreateDefaultFactory } from '@jupyterlab/apputils';
+import { ToolbarLabel } from './toolbarLabel';
 import { PartialJSONObject } from '@lumino/coreutils';
-
 
 /**
  * Create the default toolbar item widget factory
@@ -40,11 +35,13 @@ export function createDefaultFactory(
         } = toolbarItem;
         const id = toolbarItem?.tId ?? '';
         const args = { toolbar: true, ...(tArgs as PartialJSONObject) };
-        const icon = tIcon ? LabIcon.resolve({ icon: tIcon as string }) : undefined;
+        const icon = tIcon
+          ? LabIcon.resolve({ icon: tIcon as string })
+          : undefined;
 
         // If there is an icon, undefined label will results in no label
         // otherwise the label will be set using the setting or the command label
-        const label = icon ? tLabel ?? '' : tLabel;
+        const label = icon ? (tLabel ?? '') : tLabel;
         return new ToolbarLabel({
           id: id as string,
           args,
@@ -54,13 +51,17 @@ export function createDefaultFactory(
         });
       }
       default: //everything else is handled by the original implementation
-        return originalDefaultFactory(widgetFactory, widget, toolbarItem as ToolbarRegistry.IWidget);
+        return originalDefaultFactory(
+          widgetFactory,
+          widget,
+          toolbarItem as ToolbarRegistry.IWidget
+        );
     }
   };
 }
 
-export namespace ExamToolbarRegistry{
-  export interface IWidget extends Omit<ToolbarRegistry.IWidget, 'type'>{
+export namespace ExamToolbarRegistry {
+  export interface IWidget extends Omit<ToolbarRegistry.IWidget, 'type'> {
     type?: 'command' | 'spacer' | 'label';
   } // this extends the original IWidget interface to accept the new type (if you want to add a new type, make sure to add it to the schema for the permitted settings too)
 }

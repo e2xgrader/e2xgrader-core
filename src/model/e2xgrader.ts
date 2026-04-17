@@ -31,9 +31,9 @@ export namespace E2xGraderMetadata {
   };
 }
 
-export interface E2xGraderSubmissionResponse {
-  success: boolean,
-  value: string,
-  hashcode?: string,
-  timestamp?: string
+export interface IE2xGraderSubmissionResponse {
+  success: boolean;
+  value: string;
+  hashcode?: string;
+  timestamp?: string;
 }

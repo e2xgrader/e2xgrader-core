@@ -9,7 +9,7 @@ import { E2XContentFactory } from './cell_factory/factory';
 import {
   INotebookWidgetFactory,
   NotebookWidgetFactory,
-  NotebookPanel,
+  NotebookPanel
 } from '@jupyterlab/notebook';
 import { IRenderMimeRegistry } from '@jupyterlab/rendermime';
 import {
@@ -18,8 +18,8 @@ import {
   ToolbarWidgetRegistry
 } from '@jupyterlab/apputils';
 import { ITranslator } from '@jupyterlab/translation';
-import { activateWidgetFactory } from "./notebook-toolbar/widgetFactory";
-import { createDefaultFactory } from "./notebook-toolbar/toolbarRegistry";
+import { activateWidgetFactory } from './notebook-toolbar/widgetFactory';
+import { createDefaultFactory } from './notebook-toolbar/toolbarRegistry';
 
 const plugin_ids = {
   cellRegistry: '@e2xgrader/core:cell-registry',
@@ -85,20 +85,22 @@ const cellFactoryPlugin: JupyterFrontEndPlugin<NotebookPanel.IContentFactory> =
 /**
  * Initialization data for the @e2xgrader/core:widget-factory extension.
  */
-const widgetFactoryPlugin: JupyterFrontEndPlugin<NotebookWidgetFactory.IFactory> = {
-  id: '@e2xgrader-extension/core:widget-factory',
-  description: 'A JupyterLab that replaces the native notebook-widget-factory extension to achieve an empty notebook toolbar.',
-  provides: INotebookWidgetFactory,
-  requires: [
-    NotebookPanel.IContentFactory,
-    IEditorServices,
-    IRenderMimeRegistry,
-    IToolbarWidgetRegistry
-  ],
-  optional: [ISettingRegistry, ISessionContextDialogs, ITranslator],
-  activate: activateWidgetFactory,
-  autoStart: true
-};
+const widgetFactoryPlugin: JupyterFrontEndPlugin<NotebookWidgetFactory.IFactory> =
+  {
+    id: '@e2xgrader-extension/core:widget-factory',
+    description:
+      'A JupyterLab that replaces the native notebook-widget-factory extension to achieve an empty notebook toolbar.',
+    provides: INotebookWidgetFactory,
+    requires: [
+      NotebookPanel.IContentFactory,
+      IEditorServices,
+      IRenderMimeRegistry,
+      IToolbarWidgetRegistry
+    ],
+    optional: [ISettingRegistry, ISessionContextDialogs, ITranslator],
+    activate: activateWidgetFactory,
+    autoStart: true
+  };
 
 /**
  * Initialization data for the @e2xgrader/core:toolbar-registry extension.
