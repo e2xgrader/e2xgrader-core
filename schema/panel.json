@@ -19,12 +19,29 @@
       },
       { "name": "spacer", "type": "spacer", "rank": 100 },
       { "name": "executionProgress", "rank": 1002 }
+    ],
+    "NotebookSecondary": [
+      {
+        "name": "secondary-branding",
+        "type": "label",
+        "label": "secondary toolbar",
+        "ranK": 0
+      }
     ]
   },
   "jupyter.lab.transform": true,
   "properties": {
     "toolbar": {
       "title": "Notebook panel toolbar items",
+      "description": "Note: To disable a toolbar item,\ncopy it to User Preferences and add the\n\"disabled\" key. The following example will disable the Interrupt button item:\n{\n  \"toolbar\": [\n    {\n      \"name\": \"interrupt\",\n      \"disabled\": true\n    }\n  ]\n}\n\nToolbar description:",
+      "items": {
+        "$ref": "#/definitions/toolbarItem"
+      },
+      "type": "array",
+      "default": []
+    },
+    "secondaryToolbar": {
+      "title": "Notebook panel secondary toolbar items",
       "description": "Note: To disable a toolbar item,\ncopy it to User Preferences and add the\n\"disabled\" key. The following example will disable the Interrupt button item:\n{\n  \"toolbar\": [\n    {\n      \"name\": \"interrupt\",\n      \"disabled\": true\n    }\n  ]\n}\n\nToolbar description:",
       "items": {
         "$ref": "#/definitions/toolbarItem"
