@@ -43,6 +43,11 @@ const FACTORY = 'Notebook';
  */
 export const PANEL_SETTINGS = '@e2xgrader/core:panel';
 
+/**
+ * Setting Id storing the secondary toolbar definition.
+ */
+export const SECONDARY_TOOLBAR_SETTINGS = '@e2xgrader/core:secondary-toolbar';
+
 const TRACKER_PLUGIN_ID = '@jupyterlab/notebook-extension:tracker';
 
 export function activateWidgetFactory(
@@ -138,7 +143,7 @@ export function activateWidgetFactory(
       toolbarRegistry,
       settingRegistry,
       'NotebookSecondary',
-      PANEL_SETTINGS,
+      SECONDARY_TOOLBAR_SETTINGS,
       translator,
       'secondaryToolbar'
     );

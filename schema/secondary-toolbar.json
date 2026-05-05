@@ -1,30 +1,14 @@
 {
-  "title": "Custom Notebook Panel",
-  "description": "Custom Notebook Panel settings.",
+  "title": "Secondary Notebook Panel",
+  "description": "Secondary Notebook Panel settings.",
   "jupyter.lab.toolbars": {
-    "Notebook": [
-      { "name": "save", "rank": 10 },
-      { "name": "run", "command": "runmenu:run", "rank": 30 },
-      { "name": "interrupt", "command": "kernelmenu:interrupt", "rank": 31 },
-      {
-        "name": "restart-and-run",
-        "command": "notebook:restart-run-all",
-        "rank": 32
-      },
-      {
-        "name": "clear-all-outputs",
-        "command": "notebook:clear-all-cell-outputs",
-        "icon": "ui-components:clear",
-        "rank": 33
-      },
-      { "name": "spacer", "type": "spacer", "rank": 100 },
-      { "name": "executionProgress", "rank": 1002 }
+    "NotebookSecondary": [
     ]
   },
   "jupyter.lab.transform": true,
   "properties": {
-    "toolbar": {
-      "title": "Notebook panel toolbar items",
+    "secondaryToolbar": {
+      "title": "Notebook panel secondary toolbar items",
       "description": "Note: To disable a toolbar item,\ncopy it to User Preferences and add the\n\"disabled\" key. The following example will disable the Interrupt button item:\n{\n  \"toolbar\": [\n    {\n      \"name\": \"interrupt\",\n      \"disabled\": true\n    }\n  ]\n}\n\nToolbar description:",
       "items": {
         "$ref": "#/definitions/toolbarItem"
