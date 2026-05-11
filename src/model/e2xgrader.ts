@@ -27,7 +27,7 @@ export namespace E2xGraderMetadata {
    */
   export const E2X_METADATA_DEFAULTS: IE2xGraderMetadata = {
     type: undefined,
-    options: {}
+    options: {} //TODO: Is this meant for choice cells?
   };
 }
 

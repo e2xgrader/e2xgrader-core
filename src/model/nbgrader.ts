@@ -8,6 +8,8 @@ export namespace NbgraderMetadata {
     grade_id: string;
     locked: boolean;
     points?: number;
+    for?: string;
+    task_name?: string;
     schema_version: number;
   }
 
@@ -22,6 +24,10 @@ export namespace NbgraderMetadata {
       locked: false,
       schema_version: NBGRADER_SCHEMA_VERSION
     };
+  }
+
+  export function getRandomTaskName(): string{
+    return `task-${Private.randomString(12)}`;
   }
 
   namespace Private {
