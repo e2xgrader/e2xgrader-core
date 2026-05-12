@@ -19,6 +19,16 @@ export namespace E2xGraderMetadata {
      */
     options?: any;
 
+    /**
+     * linked cell(s)
+     */
+    for?: string|string[];
+
+    /**
+     * user defined name of a task
+     */
+    task_name?: string;
+
     [key: string]: any;
   }
 
@@ -27,7 +37,9 @@ export namespace E2xGraderMetadata {
    */
   export const E2X_METADATA_DEFAULTS: IE2xGraderMetadata = {
     type: undefined,
-    options: {} //TODO: Is this meant for choice cells?
+    for: undefined,
+    task_name: undefined,
+    options: {}
   };
 }
 

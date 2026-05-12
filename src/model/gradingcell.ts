@@ -1,10 +1,8 @@
-import { ISharedCell, SharedCell } from '@jupyter/ydoc';
-import {
-  NbgraderMetadata,
-  NbgraderCellType,
-  NbgraderCellTypes
-} from './nbgrader';
-import { E2xGraderMetadata } from './e2xgrader';
+import {ISharedCell, SharedCell} from '@jupyter/ydoc';
+import {NbgraderCellType, NbgraderCellTypes, NbgraderMetadata} from './nbgrader';
+import {E2xGraderMetadata} from './e2xgrader';
+import {E2xGraderCellRegistry} from "../cell_registry/registry";
+import {randomHexString} from "../util/randomHexString";
 
 export class GradingCellModel {
   private readonly _cell: ISharedCell;
@@ -122,6 +120,22 @@ export class GradingCellModel {
     this.setNbgraderMetadataKey('points', value);
   }
 
+  get taskName(): string|undefined {
+    return this.e2xgraderMetadata?.task_name;
+  }
+
+  set taskName(value: string|undefined) {
+    this.setE2xgraderMetadataKey('task_name', value);
+  }
+
+  get for(): string|string[]|undefined{
+    return this.e2xgraderMetadata?.for;
+  }
+
+  set for(value: string|string[]|undefined){
+    this.setE2xgraderMetadataKey('for', value);
+  }
+
   get e2xgraderType(): string | undefined {
     return this.e2xgraderMetadata?.type;
   }
@@ -151,6 +165,41 @@ export class GradingCellModel {
 
   get isManualGradingCell(): boolean {
     return this.matchesCellType(NbgraderCellType.MANUALLY_GRADED_ANSWER);
+  }
+
+  switchToCellType(cellRegistry: E2xGraderCellRegistry.IE2xGraderCellRegistry | undefined, newCellType: string): void{
+    if((Object.values(NbgraderCellType) as string[]).includes(newCellType)) {
+      this.setNbGraderCellType(newCellType as NbgraderCellType);
+      this.setE2xGraderCellType(cellRegistry, undefined);
+    }else if(cellRegistry?.getPluginTypes().includes(newCellType)) {
+      this.setNbGraderCellType(NbgraderCellType.MANUALLY_GRADED_ANSWER);
+      this.setE2xGraderCellType(cellRegistry, newCellType);
+    }else {
+      this.removeE2xgraderMetadata();
+      this.removeNbgraderMetadata();
+    }
+  }
+
+  setNbGraderCellType(newCellType: NbgraderCellType): void{
+    const newNbGraderMetaData: NbgraderMetadata.INbgraderMetadata = NbgraderMetadata.newNbGraderMetadata();
+    if(this.points) newNbGraderMetaData.points = this.points; //keep points
+    if(this.gradeId) newNbGraderMetaData.grade_id = this.gradeId; //keep grade_id
+    this.setMetadata(NbgraderMetadata.NBGRADER_METADATA_KEY, {...newNbGraderMetaData, ...(NbgraderCellTypes.cellTypeConfigurations[newCellType])});
+  }
+
+  setE2xGraderCellType(cellRegistry: E2xGraderCellRegistry.IE2xGraderCellRegistry | undefined, newCellType: string|undefined): void{
+    const newE2xGraderMetaData: E2xGraderMetadata.IE2xGraderMetadata = E2xGraderMetadata.E2X_METADATA_DEFAULTS;
+    if(this.taskName) newE2xGraderMetaData.task_name = this.taskName; //keep task name
+    if(this.for) newE2xGraderMetaData.for = this.for; //keep cell link(s)
+    if(newCellType && cellRegistry) {
+      newE2xGraderMetaData.type = newCellType;
+      this.setMetadata(E2xGraderMetadata.E2XGRADER_METADATA_KEY, {...newE2xGraderMetaData, ...((cellRegistry.getPlugin(newCellType) as E2xGraderCellRegistry.IE2xGraderCellPlugin).cleanMetadata)});
+    }else {
+      this.setMetadata(E2xGraderMetadata.E2XGRADER_METADATA_KEY, newE2xGraderMetaData);
+    }
+    if(this.isSolution && !this.taskName){
+      this.taskName = `task-${randomHexString(12)}`
+    }
   }
 
   toJSON(): SharedCell.Cell {

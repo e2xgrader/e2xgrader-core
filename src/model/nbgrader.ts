@@ -1,6 +1,8 @@
+import {randomHexString} from "../util/randomHexString";
+
 export namespace NbgraderMetadata {
   export interface INbgraderMetadata {
-    cell_type?: string;
+    //cell_type?: string; //TODO remove this
     checksum?: string;
     solution: boolean;
     task: boolean;
@@ -8,8 +10,6 @@ export namespace NbgraderMetadata {
     grade_id: string;
     locked: boolean;
     points?: number;
-    for?: string;
-    task_name?: string;
     schema_version: number;
   }
 
@@ -20,26 +20,10 @@ export namespace NbgraderMetadata {
       solution: false,
       task: false,
       grade: false,
-      grade_id: `cell-${Private.randomString(12)}`,
+      grade_id: `cell-${randomHexString(12)}`,
       locked: false,
       schema_version: NBGRADER_SCHEMA_VERSION
     };
-  }
-
-  export function getRandomTaskName(): string{
-    return `task-${Private.randomString(12)}`;
-  }
-
-  namespace Private {
-    export function randomString(length: number): string {
-      let result = '';
-      const chars = 'abcdef0123456789';
-      let i;
-      for (i = 0; i < length; i++) {
-        result += chars[Math.floor(Math.random() * chars.length)];
-      }
-      return result;
-    }
   }
 }
 
