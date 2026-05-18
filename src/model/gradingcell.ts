@@ -56,6 +56,13 @@ export class GradingCellModel {
     );
   }
 
+  /**
+   * unique ID of the cell
+   */
+  get id(): string{
+    return this._cell.id;
+  }
+
   get nbgraderMetadata(): NbgraderMetadata.INbgraderMetadata | undefined {
     return this.getMetadata(NbgraderMetadata.NBGRADER_METADATA_KEY);
   }
