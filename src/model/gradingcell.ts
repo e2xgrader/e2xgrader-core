@@ -1,8 +1,9 @@
-import {ISharedCell, SharedCell} from '@jupyter/ydoc';
+import {ISharedCell, SharedCell, IMapChange} from '@jupyter/ydoc';
 import {NbgraderCellType, NbgraderCellTypes, NbgraderMetadata} from './nbgrader';
 import {E2xGraderMetadata} from './e2xgrader';
 import {E2xGraderCellRegistry} from "../cell_registry/registry";
 import {randomHexString} from "../util/randomHexString";
+import {ISignal} from "@lumino/signaling";
 
 export class GradingCellModel {
   private readonly _cell: ISharedCell;
@@ -172,6 +173,10 @@ export class GradingCellModel {
 
   get isManualGradingCell(): boolean {
     return this.matchesCellType(NbgraderCellType.MANUALLY_GRADED_ANSWER);
+  }
+
+  get metadataChanged(): ISignal<ISharedCell, IMapChange>{
+    return this._cell.metadataChanged;
   }
 
   switchToCellType(cellRegistry: E2xGraderCellRegistry.IE2xGraderCellRegistry | undefined, newCellType: string): void{
