@@ -51,6 +51,14 @@
           "type": "string",
           "default": ""
         },
+        "commands": {
+          "title": "Dropdown commands",
+          "items": {
+            "$ref": "#/definitions/toolbarItem"
+          },
+          "type": "array",
+          "default": []
+        },
         "disabled": {
           "title": "Whether the item is ignored or not",
           "type": "boolean",
@@ -74,7 +82,7 @@
         "type": {
           "title": "Item type",
           "type": "string",
-          "enum": ["command", "spacer", "label"]
+          "enum": ["command", "spacer", "label", "dropdown"]
         },
         "rank": {
           "title": "Item rank",
