@@ -195,7 +195,7 @@ export interface INbGraderAssignment {
   course_id: string;
   student_id?: string;
   assignment_id: string;
-  status: 'released' | 'fetched';
+  status: 'released' | 'fetched' | 'submitted';
   path: string;
   notebooks: INbGraderNotebook[];
 }
