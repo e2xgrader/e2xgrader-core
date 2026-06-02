@@ -1,0 +1,91 @@
+{
+  "title": "Custom Notebook Panel",
+  "description": "Custom Notebook Panel settings.",
+  "jupyter.lab.toolbars": {
+    "Notebook": [
+      { "name": "save", "rank": 10 },
+      { "name": "run", "command": "runmenu:run", "rank": 30 },
+      { "name": "interrupt", "command": "kernelmenu:interrupt", "rank": 31 },
+      {
+        "name": "restart-and-run",
+        "command": "notebook:restart-run-all",
+        "rank": 32
+      },
+      {
+        "name": "clear-all-outputs",
+        "command": "notebook:clear-all-cell-outputs",
+        "icon": "ui-components:clear",
+        "rank": 33
+      },
+      { "name": "spacer", "type": "spacer", "rank": 100 },
+      { "name": "executionProgress", "rank": 1002 }
+    ]
+  },
+  "jupyter.lab.transform": true,
+  "properties": {
+    "toolbar": {
+      "title": "Notebook panel toolbar items",
+      "description": "Note: To disable a toolbar item,\ncopy it to User Preferences and add the\n\"disabled\" key. The following example will disable the Interrupt button item:\n{\n  \"toolbar\": [\n    {\n      \"name\": \"interrupt\",\n      \"disabled\": true\n    }\n  ]\n}\n\nToolbar description:",
+      "items": {
+        "$ref": "#/definitions/toolbarItem"
+      },
+      "type": "array",
+      "default": []
+    }
+  },
+  "additionalProperties": false,
+  "type": "object",
+  "definitions": {
+    "toolbarItem": {
+      "properties": {
+        "name": {
+          "title": "Unique name",
+          "type": "string"
+        },
+        "args": {
+          "title": "Command arguments",
+          "type": "object"
+        },
+        "command": {
+          "title": "Command id",
+          "type": "string",
+          "default": ""
+        },
+        "disabled": {
+          "title": "Whether the item is ignored or not",
+          "type": "boolean",
+          "default": false
+        },
+        "icon": {
+          "title": "Item icon id",
+          "description": "If defined, it will override the command icon",
+          "type": "string"
+        },
+        "label": {
+          "title": "Item label",
+          "description": "If defined, it will override the command label",
+          "type": "string"
+        },
+        "caption": {
+          "title": "Item caption",
+          "description": "If defined, it will override the command caption",
+          "type": "string"
+        },
+        "type": {
+          "title": "Item type",
+          "type": "string",
+          "enum": ["command", "spacer", "label"]
+        },
+        "rank": {
+          "title": "Item rank",
+          "type": "number",
+          "minimum": 0,
+          "default": 50
+        }
+      },
+      "required": ["name"],
+      "additionalProperties": false,
+      "type": "object"
+    }
+  }
+}

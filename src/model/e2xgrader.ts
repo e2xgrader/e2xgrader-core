@@ -30,3 +30,10 @@ export namespace E2xGraderMetadata {
     options: {}
   };
 }
+
+export interface IE2xGraderSubmissionResponse {
+  success: boolean;
+  value: string;
+  hashcode?: string;
+  timestamp?: string;
+}
