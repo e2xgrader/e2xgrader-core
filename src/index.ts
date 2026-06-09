@@ -132,4 +132,4 @@ export * from './model/e2xgrader';
 export * from './toolbar/toolbar';
 export * from './notebook-toolbar/toolbarLabel';
 export * from './apis/SharedMaterialsAPI';
-export * from './apis/AssignmentListAPI'
+export * from './apis/AssignmentListAPI';
