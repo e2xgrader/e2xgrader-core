@@ -175,6 +175,27 @@ export class GradingCellModel {
     return this.matchesCellType(NbgraderCellType.MANUALLY_GRADED_ANSWER);
   }
 
+  /**
+   * indicates if the cell may have points assigned to it
+   */
+  get hasPoints(): boolean {
+    return this.isAutograderTest || this.isManualGradingCell || this.isTask;
+  }
+
+  /**
+   * indicates if linkable cells may be linked to this cell (to form a task)
+   */
+  get isLinkTarget(): boolean {
+    return this.isManualGradingCell || this.isAutograderSolution || this.isTask;
+  }
+
+  /**
+   * indicates if the cell may be linked to a link-target (to be part of a task)
+   */
+  get isLinkable(): boolean {
+    return this.isDescription || this.isAutograderTest;
+  }
+
   get metadataChanged(): ISignal<ISharedCell, IMapChange>{
     return this._cell.metadataChanged;
   }
