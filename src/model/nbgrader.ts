@@ -2,7 +2,6 @@ import {randomHexString} from "../util/randomHexString";
 
 export namespace NbgraderMetadata {
   export interface INbgraderMetadata {
-    //cell_type?: string; //TODO remove this
     checksum?: string;
     solution: boolean;
     task: boolean;
@@ -188,4 +187,11 @@ export interface INbGraderAssignment {
   status: 'released' | 'fetched' | 'submitted';
   path: string;
   notebooks: INbGraderNotebook[];
+}
+
+export namespace NbGraderAutograding {
+  export const SOLUTION_START_SEQUENCE = '### BEGIN SOLUTION';
+  export const SOLUTION_END_SEQUENCE = '### END SOLUTION';
+  export const TEST_START_SEQUENCE = '### BEGIN HIDDEN TESTS';
+  export const TEST_END_SEQUENCE = '### END HIDDEN TESTS';
 }
