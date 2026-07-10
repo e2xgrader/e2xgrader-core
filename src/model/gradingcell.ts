@@ -2,7 +2,6 @@ import {ISharedCell, SharedCell, IMapChange} from '@jupyter/ydoc';
 import {NbgraderCellType, NbgraderCellTypes, NbgraderMetadata} from './nbgrader';
 import {E2xGraderMetadata} from './e2xgrader';
 import {E2xGraderCellRegistry} from "../cell_registry/registry";
-import {randomHexString} from "../util/randomHexString";
 import {ISignal} from "@lumino/signaling";
 
 export class GradingCellModel {
@@ -196,7 +195,7 @@ export class GradingCellModel {
     return this.isDescription || this.isAutograderTest;
   }
 
-  get metadataChanged(): ISignal<ISharedCell, IMapChange>{
+  get metadataChanged(): ISignal<ISharedCell, IMapChange> {
     return this._cell.metadataChanged;
   }
 
@@ -231,7 +230,7 @@ export class GradingCellModel {
       this.setMetadata(E2xGraderMetadata.E2XGRADER_METADATA_KEY, newE2xGraderMetaData);
     }
     if(this.isSolution && !this.taskName){
-      this.taskName = `task-${randomHexString(12)}`
+      this.taskName = E2xGraderMetadata.getNewTaskName();
     }
   }
 

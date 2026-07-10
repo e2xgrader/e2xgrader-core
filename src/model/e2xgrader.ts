@@ -1,3 +1,5 @@
+import {randomHexString} from "../util/randomHexString";
+
 /**
  * Namespace containing interfaces and constants related to E2x metadata.
  */
@@ -41,6 +43,10 @@ export namespace E2xGraderMetadata {
     task_name: undefined,
     options: {}
   };
+
+  export function getNewTaskName(): string{
+    return `task-${randomHexString(12)}`;
+  }
 }
 
 export interface IE2xGraderSubmissionResponse {
