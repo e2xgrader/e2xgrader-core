@@ -15,7 +15,7 @@ export const TOOLBAR_DROPDOWN_WRAPPER_CLASS: string =
   'jp-ToolbarDropdown-wrapper';
 export const TOOLBAR_DROPDOWN_MENU_CLASS: string = 'jp-ToolbarDropdown-menu';
 
-export class ToolbarDropdown extends ReactWidget {
+export class ToolbarDropdownComponent extends ReactWidget {
   private _showDropdownMenu: boolean = false;
   private readonly _dropdownRef: React.RefObject<HTMLDivElement>;
 
@@ -32,6 +32,10 @@ export class ToolbarDropdown extends ReactWidget {
         this.closeDropdownMenu();
       }
     });
+  }
+
+  setProps(props: ToolbarDropdownComponent.IProps): void {
+    this._props = props;
   }
 
   toggleDropdownMenu(): void {

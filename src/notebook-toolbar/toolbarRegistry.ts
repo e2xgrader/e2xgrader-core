@@ -5,7 +5,7 @@ import { Widget } from '@lumino/widgets';
 import { createDefaultFactory as originalCreateDefaultFactory } from '@jupyterlab/apputils';
 import { ToolbarLabel } from './toolbarLabel';
 import { PartialJSONObject } from '@lumino/coreutils';
-import { ToolbarDropdown } from './toolbarDropdown';
+import { ToolbarDropdownComponent } from './toolbarDropdownComponent';
 
 /**
  * Create the default toolbar item widget factory
@@ -71,7 +71,7 @@ export function createDefaultFactory(
         // If there is an icon, undefined label will results in no label
         // otherwise the label will be set using the setting or the command label
         const label = icon ? (tLabel ?? '') : tLabel;
-        return new ToolbarDropdown({
+        return new ToolbarDropdownComponent({
           id: id as string,
           args,
           icon,
@@ -95,7 +95,7 @@ export function createDefaultFactory(
 
               const toolbar = (widget as any).toolbar as Toolbar;
 
-              // If there is an icon, undefined label will results in no label
+              // If there is an icon, undefined label will result in no label
               // otherwise the label will be set using the setting or the command label
               const label:
                 | CommandRegistry.CommandFunc<string>
