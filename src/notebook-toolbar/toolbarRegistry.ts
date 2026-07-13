@@ -4,8 +4,8 @@ import { CommandRegistry } from '@lumino/commands';
 import { Widget } from '@lumino/widgets';
 import { createDefaultFactory as originalCreateDefaultFactory } from '@jupyterlab/apputils';
 import { ToolbarLabel } from './toolbarLabel';
-import {PartialJSONObject} from '@lumino/coreutils';
-import {ToolbarDropdown} from "./toolbarDropdown";
+import { PartialJSONObject } from '@lumino/coreutils';
+import { ToolbarDropdown } from './toolbarDropdown';
 
 /**
  * Create the default toolbar item widget factory
@@ -61,7 +61,9 @@ export function createDefaultFactory(
         } = toolbarItem;
         const id = toolbarItem?.tId ?? '';
         const args = { toolbar: true, ...(tArgs as PartialJSONObject) };
-        const entries: ExamToolbarRegistry.IWidget[] = Array.isArray(tCommands) ? tCommands : [];
+        const entries: ExamToolbarRegistry.IWidget[] = Array.isArray(tCommands)
+          ? tCommands
+          : [];
         const icon = tIcon
           ? LabIcon.resolve({ icon: tIcon as string })
           : undefined;
@@ -75,33 +77,49 @@ export function createDefaultFactory(
           icon,
           label: label as string,
           caption: tCaption as string,
-          commands: entries.filter(val => !!val).map((command: ExamToolbarRegistry.IWidget) => {
-            const {
-              command: cId,
-              args: cArgs,
-              label: cLabel,
-              caption: cCaption,
-              icon: cIcon
-            } = command;
-            const id: string = typeof cId === 'string' ? cId : '';
-            const args = { toolbar: true, ...(cArgs as PartialJSONObject) };
-            const icon = cIcon ? LabIcon.resolve({ icon: (cIcon as string) }) : undefined;
+          commands: entries
+            .filter(val => !!val)
+            .map((command: ExamToolbarRegistry.IWidget) => {
+              const {
+                command: cId,
+                args: cArgs,
+                label: cLabel,
+                caption: cCaption,
+                icon: cIcon
+              } = command;
+              const id: string = typeof cId === 'string' ? cId : '';
+              const args = { toolbar: true, ...(cArgs as PartialJSONObject) };
+              const icon = cIcon
+                ? LabIcon.resolve({ icon: cIcon as string })
+                : undefined;
 
-            const toolbar = (widget as any).toolbar as Toolbar;
+              const toolbar = (widget as any).toolbar as Toolbar;
 
-            // If there is an icon, undefined label will results in no label
-            // otherwise the label will be set using the setting or the command label
-            const label: CommandRegistry.CommandFunc<string>|string|undefined = icon ?? commands.icon(id, args) ? (cLabel as CommandRegistry.CommandFunc<string>|string|undefined) ?? '' : (cLabel as CommandRegistry.CommandFunc<string>|string|undefined) ?? undefined;
-            return ({
-              commands,
-              id,
-              args,
-              icon,
-              label,
-              caption: (cCaption as string|undefined),
-              noFocusOnClick: toolbar?.noFocusOnClick ?? false
+              // If there is an icon, undefined label will results in no label
+              // otherwise the label will be set using the setting or the command label
+              const label:
+                | CommandRegistry.CommandFunc<string>
+                | string
+                | undefined =
+                (icon ?? commands.icon(id, args))
+                  ? ((cLabel as
+                      | CommandRegistry.CommandFunc<string>
+                      | string
+                      | undefined) ?? '')
+                  : ((cLabel as
+                      | CommandRegistry.CommandFunc<string>
+                      | string
+                      | undefined) ?? undefined);
+              return {
+                commands,
+                id,
+                args,
+                icon,
+                label,
+                caption: cCaption as string | undefined,
+                noFocusOnClick: toolbar?.noFocusOnClick ?? false
+              };
             })
-          })
         });
       }
       default: //everything else is handled by the original implementation

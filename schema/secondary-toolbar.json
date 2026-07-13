@@ -2,8 +2,7 @@
   "title": "Secondary Notebook Panel",
   "description": "Secondary Notebook Panel settings.",
   "jupyter.lab.toolbars": {
-    "NotebookSecondary": [
-    ]
+    "NotebookSecondary": []
   },
   "jupyter.lab.transform": true,
   "properties": {

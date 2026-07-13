@@ -1,4 +1,4 @@
-import {randomHexString} from "../util/randomHexString";
+import { randomHexString } from '../util/randomHexString';
 
 /**
  * Namespace containing interfaces and constants related to E2x metadata.
@@ -24,7 +24,7 @@ export namespace E2xGraderMetadata {
     /**
      * linked cell(s)
      */
-    for?: string|string[];
+    for?: string | string[];
 
     /**
      * user defined name of a task
@@ -44,7 +44,7 @@ export namespace E2xGraderMetadata {
     options: {}
   };
 
-  export function getNewTaskName(): string{
+  export function getNewTaskName(): string {
     return `task-${randomHexString(12)}`;
   }
 }

@@ -8,6 +8,8 @@ import {
 import { ExtendedNotebookPanel } from './ExtendedNotebookPanel';
 import { IObservableList } from '@jupyterlab/observables';
 import { setSecondaryToolbar } from './setSecondaryToolbar';
+import { Widget } from '@lumino/widgets';
+import { ToolbarRegistry } from '@jupyterlab/apputils';
 
 /**
  * A widget factory for notebook panels.
@@ -70,12 +72,14 @@ export class ExtendedNotebookWidgetFactory extends NotebookWidgetFactory {
   ): NotebookPanel {
     const widget = super.createNew(context, source);
 
-    console.log(this._secondaryToolbarFactory);
-
     setSecondaryToolbar(
       widget,
-      // @ts-ignore
-      this._secondaryToolbarFactory ?? this.defaultToolbarFactory.bind(this)
+      (this._secondaryToolbarFactory ??
+        this.defaultToolbarFactory.bind(this)) as (
+        widget: Widget
+      ) =>
+        | IObservableList<ToolbarRegistry.IToolbarItem>
+        | ToolbarRegistry.IToolbarItem[]
     );
 
     return widget;

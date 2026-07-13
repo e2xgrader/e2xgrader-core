@@ -1,0 +1,23 @@
+.jp-ToolbarDropdown {
+  .jp-ToolbarDropdown-wrapper {
+    ul.jp-ToolbarDropdown-menu {
+      margin: 0;
+      padding: 0 0 0.25rem 0;
+      list-style-type: none;
+      position: absolute;
+      background-color: var(--jp-toolbar-background);
+
+      li {
+        padding: 0 0.5rem 0.25rem 0.5rem;
+        .jp-ToolbarButtonComponent {
+          width: 100%;
+          margin: 0;
+
+          &::part(control) {
+            justify-content: flex-start;
+          }
+        }
+      }
+    }
+  }
+}

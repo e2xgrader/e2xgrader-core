@@ -131,6 +131,7 @@ export * from './model/nbgrader';
 export * from './model/e2xgrader';
 export * from './toolbar/toolbar';
 export * from './notebook-toolbar/toolbarLabel';
+export * from './notebook-toolbar/toolbarDropdown';
 export * from './apis/SharedMaterialsAPI';
 export * from './apis/AssignmentListAPI';
 export * from './CellPresets';

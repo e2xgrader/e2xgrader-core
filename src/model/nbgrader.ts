@@ -1,4 +1,4 @@
-import {randomHexString} from "../util/randomHexString";
+import { randomHexString } from '../util/randomHexString';
 
 export namespace NbgraderMetadata {
   export interface INbgraderMetadata {

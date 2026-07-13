@@ -1,59 +1,104 @@
-import React from "react";
-import {CommandToolbarButtonComponent, LabIcon, ReactWidget} from "@jupyterlab/ui-components";
-import {ReadonlyJSONObject} from "@lumino/coreutils";
-import {CommandRegistry} from "@lumino/commands";
+import React from 'react';
+import {
+  CommandToolbarButtonComponent,
+  LabIcon,
+  ReactWidget,
+  ToolbarButtonComponent
+} from '@jupyterlab/ui-components';
+import { ReadonlyJSONObject } from '@lumino/coreutils';
+import { CommandRegistry } from '@lumino/commands';
 
 export const TOOLBAR_DROPDOWN_CLASS: string = 'jp-ToolbarDropdown';
+export const TOOLBAR_DROPDOWN_BUTTON_CLASS: string =
+  'jp-ToolbarDropdown-button';
+export const TOOLBAR_DROPDOWN_WRAPPER_CLASS: string =
+  'jp-ToolbarDropdown-wrapper';
 export const TOOLBAR_DROPDOWN_MENU_CLASS: string = 'jp-ToolbarDropdown-menu';
 
 export class ToolbarDropdown extends ReactWidget {
-    constructor(private props: ToolbarDropdownComponent.IProps) {
-        super();
-        this.addClass(TOOLBAR_DROPDOWN_CLASS);
-    }
+  private _showDropdownMenu: boolean = false;
+  private readonly _dropdownRef: React.RefObject<HTMLDivElement>;
 
-    render(): React.JSX.Element {
-        return <ToolbarDropdownComponent {...this.props} />;
-    }
-}
+  constructor(private _props: ToolbarDropdownComponent.IProps) {
+    super();
+    this.addClass(TOOLBAR_DROPDOWN_CLASS);
+    this._dropdownRef = React.createRef();
 
-export function ToolbarDropdownComponent(props: ToolbarDropdownComponent.IProps): React.JSX.Element{
-    console.log('dropdown props', props);
-    return (<div title={Private.resolveString(props.caption, props.args)}>
-        {props.icon && (
-            <LabIcon.resolveReact
-              icon={props.icon}
-              iconClass={'jp-Icon'}
-              tag={null}
-            />
-        )}
-        {props.label && (
-            <span className="jp-ToolbarButtonComponent-label">{Private.resolveString(props.label, props.args)}</span>
-        )}
-        <ul className={TOOLBAR_DROPDOWN_MENU_CLASS}>
-            {props.commands.map(commandProps => {
-                console.log('repackaged', {...commandProps, ...{caption: Private.resolveString(commandProps.caption, commandProps.args)}});
-                return (<li>
-                    <CommandToolbarButtonComponent {...{...commandProps, ...{caption: Private.resolveString(commandProps.caption, commandProps.args)}}} />
-                </li>);
+    document.addEventListener('mousedown', (event: MouseEvent) => {
+      if (
+        this._dropdownRef.current &&
+        !this._dropdownRef.current.contains(event.target as Node)
+      ) {
+        this.closeDropdownMenu();
+      }
+    });
+  }
+
+  toggleDropdownMenu(): void {
+    this._showDropdownMenu = !this._showDropdownMenu;
+    this.update();
+  }
+
+  closeDropdownMenu(): void {
+    this._showDropdownMenu = false;
+    this.update();
+  }
+
+  render(): React.JSX.Element {
+    return (
+      <div
+        ref={this._dropdownRef}
+        title={Private.resolveString(this._props.caption, this._props.args)}
+        className={TOOLBAR_DROPDOWN_WRAPPER_CLASS}
+      >
+        <ToolbarButtonComponent
+          className={TOOLBAR_DROPDOWN_BUTTON_CLASS}
+          icon={this._props.icon}
+          label={Private.resolveString(this._props.label, this._props.args)}
+          onClick={() => this.toggleDropdownMenu()}
+        />
+        {this._showDropdownMenu && (
+          <ul className={TOOLBAR_DROPDOWN_MENU_CLASS}>
+            {this._props.commands.map(commandProps => {
+              return (
+                <li onClick={() => this.closeDropdownMenu()}>
+                  <CommandToolbarButtonComponent
+                    {...{
+                      ...commandProps,
+                      ...{
+                        caption: Private.resolveString(
+                          commandProps.caption,
+                          commandProps.args
+                        )
+                      }
+                    }}
+                  />
+                </li>
+              );
             })}
-        </ul>
-    </div>);
+          </ul>
+        )}
+      </div>
+    );
+  }
 }
 
 export namespace ToolbarDropdownComponent {
-    export interface IProps {
-        id: string;
-        args?: ReadonlyJSONObject;
-        icon?: LabIcon;
-        label?: string | CommandRegistry.CommandFunc<string>;
-        caption?: string | CommandRegistry.CommandFunc<string>;
-        commands: CommandToolbarButtonComponent.IProps[];
-    }
+  export interface IProps {
+    id: string;
+    args?: ReadonlyJSONObject;
+    icon?: LabIcon;
+    label?: string | CommandRegistry.CommandFunc<string>;
+    caption?: string | CommandRegistry.CommandFunc<string>;
+    commands: CommandToolbarButtonComponent.IProps[];
+  }
 }
 
-namespace Private{
-    export function resolveString(val: string | CommandRegistry.CommandFunc<string> | undefined, args: ReadonlyJSONObject | undefined): string | undefined{
-        return typeof val === 'function' ? val(args ?? {}) : val;
-    }
+namespace Private {
+  export function resolveString(
+    val: string | CommandRegistry.CommandFunc<string> | undefined,
+    args: ReadonlyJSONObject | undefined
+  ): string | undefined {
+    return typeof val === 'function' ? val(args ?? {}) : val;
+  }
 }

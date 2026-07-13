@@ -2,7 +2,7 @@ import { Token } from '@lumino/coreutils';
 import { ISignal, Signal } from '@lumino/signaling';
 import { Widget } from '@lumino/widgets';
 import { E2XMarkdownCell } from './cell';
-import {E2xGraderSharedCell} from "../CellPresets";
+import { E2xGraderSharedCell } from '../CellPresets';
 
 export namespace E2xGraderCellRegistry {
   export type E2xRenderCellFunction = (
@@ -15,7 +15,10 @@ export namespace E2xGraderCellRegistry {
     label: string;
     renderCell: E2xRenderCellFunction;
     cleanMetadata: Record<string, any>;
-    getTaskPreset: (task_name?: string, points?: number) => E2xGraderSharedCell[];
+    getTaskPreset: (
+      task_name?: string,
+      points?: number
+    ) => E2xGraderSharedCell[];
   }
 
   export const IE2xGraderCellRegistry = new Token<IE2xGraderCellRegistry>(
