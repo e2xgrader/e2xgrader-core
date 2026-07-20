@@ -59,6 +59,11 @@
           "type": "array",
           "default": []
         },
+        "alignRight": {
+          "title": "Whether the dropdown menu should be aligned to the right of the toggle button",
+          "type": "boolean",
+          "default": false
+        },
         "disabled": {
           "title": "Whether the item is ignored or not",
           "type": "boolean",

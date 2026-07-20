@@ -56,6 +56,7 @@ export function createDefaultFactory(
           args: tArgs,
           label: tLabel,
           caption: tCaption,
+          alignRight: tAlignRight,
           icon: tIcon,
           commands: tCommands
         } = toolbarItem;
@@ -68,7 +69,7 @@ export function createDefaultFactory(
           ? LabIcon.resolve({ icon: tIcon as string })
           : undefined;
 
-        // If there is an icon, undefined label will results in no label
+        // If there is an icon, undefined label will result in no label
         // otherwise the label will be set using the setting or the command label
         const label = icon ? (tLabel ?? '') : tLabel;
         return new ToolbarDropdownComponent({
@@ -77,6 +78,7 @@ export function createDefaultFactory(
           icon,
           label: label as string,
           caption: tCaption as string,
+          alignRight: tAlignRight === true,
           commands: entries
             .filter(val => !!val)
             .map((command: ExamToolbarRegistry.IWidget) => {

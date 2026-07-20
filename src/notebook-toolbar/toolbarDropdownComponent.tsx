@@ -9,6 +9,8 @@ import { ReadonlyJSONObject } from '@lumino/coreutils';
 import { CommandRegistry } from '@lumino/commands';
 
 export const TOOLBAR_DROPDOWN_CLASS: string = 'jp-ToolbarDropdown';
+export const TOOLBAR_DROPDOWN_ACTIVE_CLASS: string =
+  'jp-ToolbarDropdown-active';
 export const TOOLBAR_DROPDOWN_BUTTON_CLASS: string =
   'jp-ToolbarDropdown-button';
 export const TOOLBAR_DROPDOWN_WRAPPER_CLASS: string =
@@ -53,7 +55,10 @@ export class ToolbarDropdownComponent extends ReactWidget {
       <div
         ref={this._dropdownRef}
         title={Private.resolveString(this._props.caption, this._props.args)}
-        className={TOOLBAR_DROPDOWN_WRAPPER_CLASS}
+        className={
+          TOOLBAR_DROPDOWN_WRAPPER_CLASS +
+          (this._showDropdownMenu ? ' ' + TOOLBAR_DROPDOWN_ACTIVE_CLASS : '')
+        }
       >
         <ToolbarButtonComponent
           className={TOOLBAR_DROPDOWN_BUTTON_CLASS}
@@ -62,7 +67,12 @@ export class ToolbarDropdownComponent extends ReactWidget {
           onClick={() => this.toggleDropdownMenu()}
         />
         {this._showDropdownMenu && (
-          <ul className={TOOLBAR_DROPDOWN_MENU_CLASS}>
+          <ul
+            className={
+              TOOLBAR_DROPDOWN_MENU_CLASS +
+              (this._props.alignRight ? ' align-right' : '')
+            }
+          >
             {this._props.commands.map(commandProps => {
               return (
                 <li onClick={() => this.closeDropdownMenu()}>
@@ -95,6 +105,7 @@ export namespace ToolbarDropdownComponent {
     label?: string | CommandRegistry.CommandFunc<string>;
     caption?: string | CommandRegistry.CommandFunc<string>;
     commands: CommandToolbarButtonComponent.IProps[];
+    alignRight?: boolean;
   }
 }
 

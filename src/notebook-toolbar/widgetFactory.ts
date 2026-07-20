@@ -36,7 +36,8 @@ import { ExtendedNotebookWidgetFactory } from '../notebook-panel/ExtendedNoteboo
 /**
  * The name of the factory that creates notebooks.
  */
-const FACTORY = 'Notebook';
+export const PRIMARY_NOTEBOOK_TOOLBAR_FACTORY_ID = 'Notebook';
+export const SECONDARY_NOTEBOOK_TOOLBAR_FACTORY_ID = 'NotebookSecondary';
 
 /**
  * Setting Id storing the customized toolbar definition.
@@ -91,23 +92,31 @@ export function activateWidgetFactory(
     Registering a factory will not immediately add a widget to the toolbar, it will only provide the implementation.
     It is still necessary to define a toolbar-item via JSON. The item will be created by the factory with the mathing name.
    */
-  toolbarRegistry.addFactory<NotebookPanel>(FACTORY, 'save', panel =>
-    DocToolbarItems.createSaveButton(commands, panel.context.fileChanged)
+  toolbarRegistry.addFactory<NotebookPanel>(
+    PRIMARY_NOTEBOOK_TOOLBAR_FACTORY_ID,
+    'save',
+    panel =>
+      DocToolbarItems.createSaveButton(commands, panel.context.fileChanged)
   );
-  toolbarRegistry.addFactory<NotebookPanel>(FACTORY, 'cellType', panel =>
-    ToolbarItems.createCellTypeItem(panel, translator)
-  );
-
-  toolbarRegistry.addFactory<NotebookPanel>(FACTORY, 'kernelName', panel =>
-    Toolbar.createKernelNameItem(
-      panel.sessionContext,
-      sessionContextDialogs,
-      translator
-    )
+  toolbarRegistry.addFactory<NotebookPanel>(
+    PRIMARY_NOTEBOOK_TOOLBAR_FACTORY_ID,
+    'cellType',
+    panel => ToolbarItems.createCellTypeItem(panel, translator)
   );
 
   toolbarRegistry.addFactory<NotebookPanel>(
-    FACTORY,
+    PRIMARY_NOTEBOOK_TOOLBAR_FACTORY_ID,
+    'kernelName',
+    panel =>
+      Toolbar.createKernelNameItem(
+        panel.sessionContext,
+        sessionContextDialogs,
+        translator
+      )
+  );
+
+  toolbarRegistry.addFactory<NotebookPanel>(
+    PRIMARY_NOTEBOOK_TOOLBAR_FACTORY_ID,
     'executionProgress',
     panel => {
       const loadingSettings = settingRegistry?.load(TRACKER_PLUGIN_ID);
@@ -134,7 +143,7 @@ export function activateWidgetFactory(
     toolbarFactory = createToolbarFactory(
       toolbarRegistry,
       settingRegistry,
-      FACTORY,
+      PRIMARY_NOTEBOOK_TOOLBAR_FACTORY_ID,
       PANEL_SETTINGS,
       translator
     );
@@ -142,7 +151,7 @@ export function activateWidgetFactory(
     secondaryToolbarFactory = createToolbarFactory(
       toolbarRegistry,
       settingRegistry,
-      'NotebookSecondary',
+      SECONDARY_NOTEBOOK_TOOLBAR_FACTORY_ID,
       SECONDARY_TOOLBAR_SETTINGS,
       translator,
       'secondaryToolbar'
@@ -152,7 +161,7 @@ export function activateWidgetFactory(
   const trans = translator.load('jupyterlab');
 
   const factory = new ExtendedNotebookWidgetFactory({
-    name: FACTORY,
+    name: PRIMARY_NOTEBOOK_TOOLBAR_FACTORY_ID,
     label: trans.__('Notebook'),
     fileTypes: ['notebook'],
     modelName: 'notebook',
