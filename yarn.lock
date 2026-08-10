@@ -1647,7 +1647,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@e2xgrader/core@workspace:."
   dependencies:
-    "@jupyter/ydoc": ^3.0.5
+    "@jupyter/ydoc": 3.3.0
     "@jupyterlab/application": ^4.0.0
     "@jupyterlab/builder": ^4.0.0
     "@jupyterlab/cells": ^4.4.2
@@ -2138,7 +2138,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jupyter/ydoc@npm:^3.0.5, @jupyter/ydoc@npm:^3.1.0":
+"@jupyter/ydoc@npm:3.3.0":
+  version: 3.3.0
+  resolution: "@jupyter/ydoc@npm:3.3.0"
+  dependencies:
+    "@jupyterlab/nbformat": ^3.0.0 || ^4.0.0-alpha.21 || ^4.0.0
+    "@lumino/coreutils": ^1.11.0 || ^2.0.0
+    "@lumino/disposable": ^1.10.0 || ^2.0.0
+    "@lumino/signaling": ^1.10.0 || ^2.0.0
+    y-protocols: ^1.0.5
+    yjs: ^13.5.40
+  checksum: 8e6af8942791a5a42a41174007bd7767c368c58c7f34a99879e2decc5c921567b41fba1774e9471bce2610d24bcee8a1a7780ad408eaaffc0e9a22f867b6e4f3
+  languageName: node
+  linkType: hard
+
+"@jupyter/ydoc@npm:^3.1.0":
   version: 3.4.0
   resolution: "@jupyter/ydoc@npm:3.4.0"
   dependencies:
