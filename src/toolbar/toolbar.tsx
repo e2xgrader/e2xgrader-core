@@ -11,8 +11,7 @@ export namespace E2xGraderCellToolbar {
     private _isAttached: boolean = false;
     private _gradingCellModel: GradingCellModel | null = null;
     private readonly _registry:
-      | E2xGraderCellRegistry.IE2xGraderCellRegistry
-      | undefined;
+      E2xGraderCellRegistry.IE2xGraderCellRegistry | undefined;
 
     constructor(
       options: Toolbar.IOptions,
@@ -43,8 +42,7 @@ export namespace E2xGraderCellToolbar {
     }
 
     get cellRegistry():
-      | E2xGraderCellRegistry.IE2xGraderCellRegistry
-      | undefined {
+      E2xGraderCellRegistry.IE2xGraderCellRegistry | undefined {
       return this._registry;
     }
 
@@ -83,8 +81,7 @@ export namespace E2xGraderCellToolbar {
       return this._toolbar.gradingCellModel;
     }
     get cellRegistry():
-      | E2xGraderCellRegistry.IE2xGraderCellRegistry
-      | undefined {
+      E2xGraderCellRegistry.IE2xGraderCellRegistry | undefined {
       return this._toolbar.cellRegistry;
     }
 

@@ -7,8 +7,7 @@ import { E2xGraderCellRegistry } from '../cell_registry/registry';
 export class E2XContentFactory extends NotebookPanel.ContentFactory {
   private readonly _settings: ISettingRegistry.ISettings | undefined;
   private readonly _registry:
-    | E2xGraderCellRegistry.IE2xGraderCellRegistry
-    | undefined;
+    E2xGraderCellRegistry.IE2xGraderCellRegistry | undefined;
 
   constructor(
     options: Cell.ContentFactory.IOptions,
