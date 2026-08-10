@@ -1665,7 +1665,6 @@ __metadata:
     stylelint-csstree-validator: ^3.0.0
     stylelint-prettier: ^4.0.0
     typescript: ^5.9.3
-    vscode-languageserver-protocol: ^3.18.2
     yjs: ^13.5.0
   languageName: unknown
   linkType: soft
@@ -10223,7 +10222,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vscode-languageserver-protocol@npm:^3.17.0, vscode-languageserver-protocol@npm:^3.18.2":
+"vscode-languageserver-protocol@npm:^3.17.0":
   version: 3.18.2
   resolution: "vscode-languageserver-protocol@npm:3.18.2"
   dependencies:
