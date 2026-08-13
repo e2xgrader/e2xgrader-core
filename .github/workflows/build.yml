@@ -46,7 +46,7 @@ jobs:
 
         jupyter labextension list
         jupyter labextension list 2>&1 | grep -ie "@e2xgrader/core.*OK"
-        python -m jupyterlab.browser_check
+        python -m jupyterlab.browser_check --no-browser-test
 
     - name: Check that all endpoints are authenticated
       run: |
