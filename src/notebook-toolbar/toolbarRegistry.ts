@@ -100,9 +100,7 @@ export function createDefaultFactory(
               // If there is an icon, undefined label will result in no label
               // otherwise the label will be set using the setting or the command label
               const label:
-                | CommandRegistry.CommandFunc<string>
-                | string
-                | undefined =
+                CommandRegistry.CommandFunc<string> | string | undefined =
                 (icon ?? commands.icon(id, args))
                   ? ((cLabel as
                       | CommandRegistry.CommandFunc<string>
