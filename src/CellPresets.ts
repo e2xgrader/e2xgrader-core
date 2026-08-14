@@ -1,5 +1,4 @@
 import { ICellMetadata } from '@jupyterlab/nbformat';
-import E2XGRADER_METADATA_KEY = E2xGraderMetadata.E2XGRADER_METADATA_KEY;
 import { E2xGraderMetadata } from './model/e2xgrader';
 import {
   NbgraderCellType,
@@ -7,19 +6,18 @@ import {
   NbgraderMetadata
 } from './model/nbgrader';
 import { SharedCell } from '@jupyter/ydoc';
-import IE2xGraderMetadata = E2xGraderMetadata.IE2xGraderMetadata;
 
 export const TASK_DESCRIPTION_DEFAULT_CELL_TYPE = 'markdown';
 export const AUTOGRADER_TEST_DEFAULT_CELL_TYPE = 'code';
 
 export type IE2xCellMetadata = ICellMetadata & {
-  [E2XGRADER_METADATA_KEY]: E2xGraderMetadata.IE2xGraderMetadata;
+  [E2xGraderMetadata.E2XGRADER_METADATA_KEY]: E2xGraderMetadata.IE2xGraderMetadata;
   [NbgraderMetadata.NBGRADER_METADATA_KEY]: NbgraderMetadata.INbgraderMetadata;
 };
 
 export type E2xGraderSharedCell = Omit<SharedCell.Cell, 'metadata'> & {
   cell_type: string;
-  metadata: IE2xGraderMetadata;
+  metadata: E2xGraderMetadata.IE2xGraderMetadata;
 };
 
 export class CellPresets {
@@ -38,7 +36,7 @@ export class CellPresets {
     } = {}
   ): Partial<IE2xCellMetadata> {
     return {
-      [E2XGRADER_METADATA_KEY]: {
+      [E2xGraderMetadata.E2XGRADER_METADATA_KEY]: {
         ...E2xGraderMetadata.E2X_METADATA_DEFAULTS,
         ...(e2xgraderCellType ? { type: e2xgraderCellType } : {}),
         ...(taskName ? { task_name: taskName } : {}),
