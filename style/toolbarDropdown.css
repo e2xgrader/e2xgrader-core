@@ -1,0 +1,34 @@
+.jp-ToolbarDropdown {
+  .jp-ToolbarDropdown-wrapper {
+    &.jp-ToolbarDropdown-active .jp-ToolbarDropdown-button {
+      background: var(--neutral-fill-stealth-active);
+    }
+
+    ul.jp-ToolbarDropdown-menu {
+      margin: 0;
+      padding: 0 0 0.25rem;
+      list-style-type: none;
+      position: absolute;
+      background-color: var(--jp-toolbar-background);
+      border: var(--jp-border-width) solid var(--jp-toolbar-border-color);
+      border-top-width: 0;
+
+      &.align-right {
+        right: 0;
+      }
+
+      li {
+        padding: 0 0.5rem 0.25rem;
+
+        .jp-ToolbarButtonComponent {
+          width: 100%;
+          margin: 0;
+
+          &::part(control) {
+            justify-content: flex-start;
+          }
+        }
+      }
+    }
+  }
+}

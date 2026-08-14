@@ -14,12 +14,12 @@ import {
 import { IRenderMimeRegistry } from '@jupyterlab/rendermime';
 import {
   IToolbarWidgetRegistry,
-  ISessionContextDialogs,
-  ToolbarWidgetRegistry
+  ISessionContextDialogs
 } from '@jupyterlab/apputils';
 import { ITranslator } from '@jupyterlab/translation';
 import { activateWidgetFactory } from './notebook-toolbar/widgetFactory';
 import { createDefaultFactory } from './notebook-toolbar/toolbarRegistry';
+import { ExtendedToolbarWidgetRegistry } from './notebook-toolbar/ExtendedToolbarWidgetRegistry';
 
 const plugin_ids = {
   cellRegistry: '@e2xgrader/core:cell-registry',
@@ -111,7 +111,7 @@ const toolbarRegistryPlugin: JupyterFrontEndPlugin<IToolbarWidgetRegistry> = {
   autoStart: true,
   provides: IToolbarWidgetRegistry,
   activate: (app: JupyterFrontEnd) => {
-    return new ToolbarWidgetRegistry({
+    return new ExtendedToolbarWidgetRegistry({
       defaultFactory: createDefaultFactory(app.commands)
     });
   }
@@ -131,5 +131,9 @@ export * from './model/nbgrader';
 export * from './model/e2xgrader';
 export * from './toolbar/toolbar';
 export * from './notebook-toolbar/toolbarLabel';
+export * from './notebook-toolbar/toolbarDropdownComponent';
+export * from './notebook-toolbar/ExtendedToolbarWidgetRegistry';
+export * from './notebook-toolbar/widgetFactory';
 export * from './apis/SharedMaterialsAPI';
 export * from './apis/AssignmentListAPI';
+export * from './CellPresets';

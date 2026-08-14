@@ -57,7 +57,7 @@
         "watch:labextension": "jupyter labextension watch ."
     },
     "dependencies": {
-        "@jupyter/ydoc": "^3.0.5",
+        "@jupyter/ydoc": "4.1.1",
         "@jupyterlab/application": "^4.0.0",
         "@jupyterlab/cells": "^4.4.2",
         "@jupyterlab/codeeditor": "^4.4.2",
