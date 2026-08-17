@@ -131,6 +131,7 @@ export * from './model/nbgrader';
 export * from './model/e2xgrader';
 export * from './toolbar/toolbar';
 export * from './notebook-toolbar/toolbarLabel';
+export * from './notebook-toolbar/toolbarDropdownComponent';
 export * from './notebook-toolbar/SecondaryToolbarWidgetRegistry';
 export * from './notebook-toolbar/widgetFactory';
 export * from './apis/SharedMaterialsAPI';
