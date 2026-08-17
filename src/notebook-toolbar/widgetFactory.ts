@@ -31,7 +31,7 @@ import { IObservableList } from '@jupyterlab/observables';
 import { DocumentRegistry } from '@jupyterlab/docregistry';
 
 import { ToolbarItems as DocToolbarItems } from '@jupyterlab/docmanager-extension';
-import { ExtendedNotebookWidgetFactory } from '../notebook-panel/ExtendedNotebookWidgetFactory';
+import { NotebookWithSecondaryToolbarWidgetFactory } from '../notebook-panel/NotebookWithSecondaryToolbarWidgetFactory';
 
 /**
  * The name of the factory that creates notebooks.
@@ -160,7 +160,7 @@ export function activateWidgetFactory(
 
   const trans = translator.load('jupyterlab');
 
-  const factory = new ExtendedNotebookWidgetFactory({
+  const factory = new NotebookWithSecondaryToolbarWidgetFactory({
     name: PRIMARY_NOTEBOOK_TOOLBAR_FACTORY_ID,
     label: trans.__('Notebook'),
     fileTypes: ['notebook'],

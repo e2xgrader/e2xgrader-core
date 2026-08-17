@@ -5,7 +5,7 @@ import {
   NotebookHistory,
   NotebookWidgetFactory
 } from '@jupyterlab/notebook';
-import { ExtendedNotebookPanel } from './ExtendedNotebookPanel';
+import { NotebookPanelWithSecondaryToolbar } from './NotebookPanelWithSecondaryToolbar';
 import { IObservableList } from '@jupyterlab/observables';
 import { setSecondaryToolbar } from './setSecondaryToolbar';
 import { Widget } from '@lumino/widgets';
@@ -14,7 +14,7 @@ import { ToolbarRegistry } from '@jupyterlab/apputils';
 /**
  * A widget factory for notebook panels.
  */
-export class ExtendedNotebookWidgetFactory extends NotebookWidgetFactory {
+export class NotebookWithSecondaryToolbarWidgetFactory extends NotebookWidgetFactory {
   private _secondaryToolbarFactory:
     | ((
         widget: NotebookPanel
@@ -28,7 +28,9 @@ export class ExtendedNotebookWidgetFactory extends NotebookWidgetFactory {
    *
    * @param options - The options used to construct the factory.
    */
-  constructor(options: ExtendedNotebookWidgetFactory.IOptions<NotebookPanel>) {
+  constructor(
+    options: NotebookWithSecondaryToolbarWidgetFactory.IOptions<NotebookPanel>
+  ) {
     super(options);
     this._secondaryToolbarFactory = options.secondaryToolbarFactory;
   }
@@ -63,7 +65,7 @@ export class ExtendedNotebookWidgetFactory extends NotebookWidgetFactory {
     };
     const content = this.contentFactory.createNotebook(nbOptions);
 
-    return new ExtendedNotebookPanel({ context, content });
+    return new NotebookPanelWithSecondaryToolbar({ context, content });
   }
 
   createNew(
@@ -86,7 +88,7 @@ export class ExtendedNotebookWidgetFactory extends NotebookWidgetFactory {
   }
 }
 
-export namespace ExtendedNotebookWidgetFactory {
+export namespace NotebookWithSecondaryToolbarWidgetFactory {
   export interface IOptions<
     T extends NotebookPanel
   > extends NotebookWidgetFactory.IOptions<T> {

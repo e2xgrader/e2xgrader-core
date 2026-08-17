@@ -8,7 +8,7 @@ import {
 /**
  * this extended ToolbarWidgetRegistry allows special toolbar-widgets to be registered, that receive individual configuration from settings as 'toolbarItem'
  */
-export class ExtendedToolbarWidgetRegistry extends ToolbarWidgetRegistry {
+export class SecondaryToolbarWidgetRegistry extends ToolbarWidgetRegistry {
   createWidget(
     widgetFactory: string,
     widget: Widget,
@@ -17,7 +17,7 @@ export class ExtendedToolbarWidgetRegistry extends ToolbarWidgetRegistry {
     const factory = this._widgets.get(widgetFactory)?.get(toolbarItem.name);
     if (factory) {
       return (
-        factory as ExtendedToolbarWidgetRegistry.ToolbarWidgetFactory<Widget>
+        factory as SecondaryToolbarWidgetRegistry.ToolbarWidgetFactory<Widget>
       )(widget, toolbarItem);
     }
     return super.createWidget(widgetFactory, widget, toolbarItem);
@@ -26,8 +26,8 @@ export class ExtendedToolbarWidgetRegistry extends ToolbarWidgetRegistry {
   addFactory<T extends Widget>(
     widgetFactory: string,
     toolbarItemName: string,
-    factory: ExtendedToolbarWidgetRegistry.ToolbarWidgetFactory<T>
-  ): ExtendedToolbarWidgetRegistry.ToolbarWidgetFactory<T> | undefined {
+    factory: SecondaryToolbarWidgetRegistry.ToolbarWidgetFactory<T>
+  ): SecondaryToolbarWidgetRegistry.ToolbarWidgetFactory<T> | undefined {
     if (widgetFactory === PRIMARY_NOTEBOOK_TOOLBAR_FACTORY_ID) {
       //if a widget-factory is registered for the primary toolbar, register it also for the secondary toolbar
       super.addFactory(
@@ -40,7 +40,7 @@ export class ExtendedToolbarWidgetRegistry extends ToolbarWidgetRegistry {
   }
 }
 
-export namespace ExtendedToolbarWidgetRegistry {
+export namespace SecondaryToolbarWidgetRegistry {
   export type ToolbarWidgetFactory<T extends Widget> = (
     main: T,
     toolbarItem?: ToolbarRegistry.IWidget

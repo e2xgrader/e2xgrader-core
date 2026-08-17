@@ -7,7 +7,7 @@ import { nullTranslator } from '@jupyterlab/translation';
 export const NOTEBOOK_PANEL_SECONDARY_TOOLBAR_CLASS =
   'jp-NotebookPanel-toolbar-secondary';
 
-export class ExtendedNotebookPanel extends NotebookPanel {
+export class NotebookPanelWithSecondaryToolbar extends NotebookPanel {
   private _secondaryToolbar: Toolbar<Widget>;
 
   /**
