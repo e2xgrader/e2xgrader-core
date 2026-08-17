@@ -4,7 +4,7 @@ import { Notebook } from '@jupyterlab/notebook';
 import { ISettingRegistry } from '@jupyterlab/settingregistry';
 import { E2xGraderCellRegistry } from './registry';
 import { E2xGraderMetadata } from '../model/e2xgrader';
-export const E2X_METADATA_KEY = 'extended_cell';
+
 export const E2X_GRADER_SETTINGS_CLASS = 'e2xgrader-options';
 export const E2X_UNRENDER_BUTTON_CLASS = 'e2xgrader-unrender';
 export const E2X_BUTTON_CLASS = 'e2xgrader-button';
@@ -124,7 +124,9 @@ export class E2XMarkdownCell extends MarkdownCell {
   }
 
   get e2xMetadata(): any {
-    return this.model?.getMetadata(E2X_METADATA_KEY) ?? {};
+    return (
+      this.model?.getMetadata(E2xGraderMetadata.E2XGRADER_METADATA_KEY) ?? {}
+    );
   }
 
   get e2xCellType(): string | undefined {
@@ -158,7 +160,7 @@ export class E2XMarkdownCell extends MarkdownCell {
   public setE2xMetadataField(field: string, value: any): void {
     const metadata = this.e2xMetadata;
     metadata[field] = value;
-    this.model?.setMetadata(E2X_METADATA_KEY, metadata);
+    this.model?.setMetadata(E2xGraderMetadata.E2XGRADER_METADATA_KEY, metadata);
   }
 
   /**
