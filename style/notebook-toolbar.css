@@ -1,0 +1,11 @@
+.jp-NotebookPanel-toolbar-secondary {
+  display: none;
+  box-shadow: unset;
+  contain: unset !important;
+  position: relative;
+
+  &:has(.jp-Toolbar-item:not(.lm-mod-hidden)) {
+    /* only show the toolbar if it contains any items that are not hidden */
+    display: unset;
+  }
+}

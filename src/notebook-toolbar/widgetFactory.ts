@@ -31,16 +31,23 @@ import { IObservableList } from '@jupyterlab/observables';
 import { DocumentRegistry } from '@jupyterlab/docregistry';
 
 import { ToolbarItems as DocToolbarItems } from '@jupyterlab/docmanager-extension';
+import { ExtendedNotebookWidgetFactory } from '../notebook-panel/ExtendedNotebookWidgetFactory';
 
 /**
  * The name of the factory that creates notebooks.
  */
-const FACTORY = 'Notebook';
+export const PRIMARY_NOTEBOOK_TOOLBAR_FACTORY_ID = 'Notebook';
+export const SECONDARY_NOTEBOOK_TOOLBAR_FACTORY_ID = 'NotebookSecondary';
 
 /**
  * Setting Id storing the customized toolbar definition.
  */
 export const PANEL_SETTINGS = '@e2xgrader/core:panel';
+
+/**
+ * Setting Id storing the secondary toolbar definition.
+ */
+export const SECONDARY_TOOLBAR_SETTINGS = '@e2xgrader/core:secondary-toolbar';
 
 const TRACKER_PLUGIN_ID = '@jupyterlab/notebook-extension:tracker';
 
@@ -71,6 +78,13 @@ export function activateWidgetFactory(
         | DocumentRegistry.IToolbarItem[]
         | IObservableList<DocumentRegistry.IToolbarItem>)
     | undefined;
+  let secondaryToolbarFactory:
+    | ((
+        widget: NotebookPanel
+      ) =>
+        | DocumentRegistry.IToolbarItem[]
+        | IObservableList<DocumentRegistry.IToolbarItem>)
+    | undefined;
 
   /* Register notebook toolbar widgets
     These Widgets implement toolbar items with special functionalities (everything that is not handled by the default-factory),
@@ -78,23 +92,31 @@ export function activateWidgetFactory(
     Registering a factory will not immediately add a widget to the toolbar, it will only provide the implementation.
     It is still necessary to define a toolbar-item via JSON. The item will be created by the factory with the mathing name.
    */
-  toolbarRegistry.addFactory<NotebookPanel>(FACTORY, 'save', panel =>
-    DocToolbarItems.createSaveButton(commands, panel.context.fileChanged)
+  toolbarRegistry.addFactory<NotebookPanel>(
+    PRIMARY_NOTEBOOK_TOOLBAR_FACTORY_ID,
+    'save',
+    panel =>
+      DocToolbarItems.createSaveButton(commands, panel.context.fileChanged)
   );
-  toolbarRegistry.addFactory<NotebookPanel>(FACTORY, 'cellType', panel =>
-    ToolbarItems.createCellTypeItem(panel, translator)
-  );
-
-  toolbarRegistry.addFactory<NotebookPanel>(FACTORY, 'kernelName', panel =>
-    Toolbar.createKernelNameItem(
-      panel.sessionContext,
-      sessionContextDialogs,
-      translator
-    )
+  toolbarRegistry.addFactory<NotebookPanel>(
+    PRIMARY_NOTEBOOK_TOOLBAR_FACTORY_ID,
+    'cellType',
+    panel => ToolbarItems.createCellTypeItem(panel, translator)
   );
 
   toolbarRegistry.addFactory<NotebookPanel>(
-    FACTORY,
+    PRIMARY_NOTEBOOK_TOOLBAR_FACTORY_ID,
+    'kernelName',
+    panel =>
+      Toolbar.createKernelNameItem(
+        panel.sessionContext,
+        sessionContextDialogs,
+        translator
+      )
+  );
+
+  toolbarRegistry.addFactory<NotebookPanel>(
+    PRIMARY_NOTEBOOK_TOOLBAR_FACTORY_ID,
     'executionProgress',
     panel => {
       const loadingSettings = settingRegistry?.load(TRACKER_PLUGIN_ID);
@@ -121,16 +143,25 @@ export function activateWidgetFactory(
     toolbarFactory = createToolbarFactory(
       toolbarRegistry,
       settingRegistry,
-      FACTORY,
+      PRIMARY_NOTEBOOK_TOOLBAR_FACTORY_ID,
       PANEL_SETTINGS,
       translator
+    );
+
+    secondaryToolbarFactory = createToolbarFactory(
+      toolbarRegistry,
+      settingRegistry,
+      SECONDARY_NOTEBOOK_TOOLBAR_FACTORY_ID,
+      SECONDARY_TOOLBAR_SETTINGS,
+      translator,
+      'secondaryToolbar'
     );
   }
 
   const trans = translator.load('jupyterlab');
 
-  const factory = new NotebookWidgetFactory({
-    name: FACTORY,
+  const factory = new ExtendedNotebookWidgetFactory({
+    name: PRIMARY_NOTEBOOK_TOOLBAR_FACTORY_ID,
     label: trans.__('Notebook'),
     fileTypes: ['notebook'],
     modelName: 'notebook',
@@ -143,6 +174,7 @@ export function activateWidgetFactory(
     notebookConfig: StaticNotebook.defaultNotebookConfig,
     mimeTypeService: editorServices.mimeTypeService,
     toolbarFactory,
+    secondaryToolbarFactory,
     translator
   });
   app.docRegistry.addWidgetFactory(factory);
