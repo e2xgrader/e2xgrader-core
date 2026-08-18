@@ -1,10 +1,11 @@
-import { ISharedCell, SharedCell } from '@jupyter/ydoc';
+import { ISharedCell, SharedCell, IMapChange } from '@jupyter/ydoc';
 import {
-  NbgraderMetadata,
   NbgraderCellType,
-  NbgraderCellTypes
+  NbgraderCellTypes,
+  NbgraderMetadata
 } from './nbgrader';
 import { E2xGraderMetadata } from './e2xgrader';
+import { ISignal } from '@lumino/signaling';
 
 export class GradingCellModel {
   private readonly _cell: ISharedCell;
@@ -56,6 +57,13 @@ export class GradingCellModel {
       nestedKey,
       value
     );
+  }
+
+  /**
+   * unique ID of the cell
+   */
+  get id(): string {
+    return this._cell.id;
   }
 
   get nbgraderMetadata(): NbgraderMetadata.INbgraderMetadata | undefined {
@@ -122,6 +130,22 @@ export class GradingCellModel {
     this.setNbgraderMetadataKey('points', value);
   }
 
+  get taskName(): string | undefined {
+    return this.e2xgraderMetadata?.task_name;
+  }
+
+  set taskName(value: string | undefined) {
+    this.setE2xgraderMetadataKey('task_name', value);
+  }
+
+  get for(): string | string[] | undefined {
+    return this.e2xgraderMetadata?.for;
+  }
+
+  set for(value: string | string[] | undefined) {
+    this.setE2xgraderMetadataKey('for', value);
+  }
+
   get e2xgraderType(): string | undefined {
     return this.e2xgraderMetadata?.type;
   }
@@ -151,6 +175,31 @@ export class GradingCellModel {
 
   get isManualGradingCell(): boolean {
     return this.matchesCellType(NbgraderCellType.MANUALLY_GRADED_ANSWER);
+  }
+
+  /**
+   * indicates if the cell may have points assigned to it
+   */
+  get hasPoints(): boolean {
+    return this.isAutograderTest || this.isManualGradingCell || this.isTask;
+  }
+
+  /**
+   * indicates if linkable cells may be linked to this cell (to form a task)
+   */
+  get isLinkTarget(): boolean {
+    return this.isManualGradingCell || this.isAutograderSolution || this.isTask;
+  }
+
+  /**
+   * indicates if the cell may be linked to a link-target (to be part of a task)
+   */
+  get isLinkable(): boolean {
+    return this.isDescription || this.isAutograderTest;
+  }
+
+  get metadataChanged(): ISignal<ISharedCell, IMapChange> {
+    return this._cell.metadataChanged;
   }
 
   toJSON(): SharedCell.Cell {
