@@ -3,9 +3,18 @@
   box-shadow: unset;
   contain: unset !important;
   position: relative;
+}
 
-  &:has(.jp-Toolbar-item:not(.lm-mod-hidden)) {
-    /* only show the toolbar if it contains any items that are not hidden */
-    display: unset;
-  }
+body[data-notebook='notebooks'] .jp-NotebookPanel-toolbar-secondary {
+  padding-left: calc(calc(100% - var(--jp-notebook-max-width)) * 0.5);
+  padding-right: calc(calc(100% - var(--jp-notebook-max-width)) * 0.5);
+}
+
+.jp-NotebookPanel-toolbar-secondary:has(.jp-Toolbar-item:not(.lm-mod-hidden)) {
+  /* only show the toolbar if it contains any items that are not hidden */
+  display: unset;
+}
+
+.jp-ToolbarButtonComponent-label {
+  margin: 0 0.5rem;
 }
