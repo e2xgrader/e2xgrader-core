@@ -47,7 +47,7 @@ body[data-notebook='notebooks'] .jp-NotebookPanel-toolbar-secondary {
   border-width: 1px;
   padding: 6px 8px;
   background: none;
-  background-color: rgba(0, 0, 0, 0);
+  background-color: transparent;
   color: var(--jp-ui-font-color0);
   height: inherit;
 }
