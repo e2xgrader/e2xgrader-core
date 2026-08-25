@@ -159,7 +159,7 @@
         "type": {
           "title": "Item type",
           "type": "string",
-          "const": ["command"],
+          "enum": ["command"],
           "default": "command"
         },
         "rank": {
