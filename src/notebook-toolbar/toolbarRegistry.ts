@@ -58,13 +58,16 @@ export function createDefaultFactory(
           caption: tCaption,
           alignRight: tAlignRight,
           icon: tIcon,
-          commands: tCommands
+          dropdownItems: tDropdownItems
         } = toolbarItem;
         const id = toolbarItem?.tId ?? '';
         const args = { toolbar: true, ...(tArgs as PartialJSONObject) };
-        const entries: ExamToolbarRegistry.IWidget[] = Array.isArray(tCommands)
-          ? tCommands
-          : [];
+        const entries: ExamToolbarRegistry.IDropdownItemWidget[] =
+          Array.isArray(tDropdownItems)
+            ? (tDropdownItems.filter(
+                val => !!val
+              ) as ExamToolbarRegistry.IDropdownItemWidget[])
+            : [];
         const icon = tIcon
           ? LabIcon.resolve({ icon: tIcon as string })
           : undefined;
@@ -79,14 +82,16 @@ export function createDefaultFactory(
           label: label as string,
           caption: tCaption as string,
           alignRight: tAlignRight === true,
-          commands: entries
+          commands,
+          dropdownItems: entries
             .filter(val => !!val)
-            .map((command: ExamToolbarRegistry.IWidget) => {
+            .map((command: ExamToolbarRegistry.IDropdownItemWidget) => {
               const {
                 command: cId,
                 args: cArgs,
                 label: cLabel,
                 caption: cCaption,
+                type: cType,
                 icon: cIcon
               } = command;
               const id: string = typeof cId === 'string' ? cId : '';
@@ -116,6 +121,7 @@ export function createDefaultFactory(
                 args,
                 icon,
                 label,
+                type: cType ?? 'command',
                 caption: cCaption as string | undefined,
                 noFocusOnClick: toolbar?.noFocusOnClick ?? false
               };
@@ -135,6 +141,13 @@ export function createDefaultFactory(
 export namespace ExamToolbarRegistry {
   export interface IWidget extends Omit<ToolbarRegistry.IWidget, 'type'> {
     type?: 'command' | 'spacer' | 'label' | 'dropdown';
-    commands?: IWidget[];
+    dropdownWidget?: IDropdownItemWidget[];
   } // this extends the original IWidget interface to accept the new type (if you want to add a new type, make sure to add it to the schema for the permitted settings too)
+
+  export interface IDropdownItemWidget extends Omit<
+    ToolbarRegistry.IWidget,
+    'type'
+  > {
+    type?: 'command' | 'spacer';
+  }
 }

@@ -11,8 +11,10 @@ import { CommandRegistry } from '@lumino/commands';
 export const TOOLBAR_DROPDOWN_CLASS: string = 'jp-ToolbarDropdown';
 export const TOOLBAR_DROPDOWN_ACTIVE_CLASS: string =
   'jp-ToolbarDropdown-active';
-export const TOOLBAR_DROPDOWN_BUTTON_CLASS: string =
-  'jp-ToolbarDropdown-button';
+export const TOOLBAR_DROPDOWN_TOGGLE_CLASS: string =
+  'jp-ToolbarDropdown-toggle';
+export const TOOLBAR_DROPDOWN_SPACER_CLASS: string =
+  'jp-ToolbarDropdown-spacer';
 export const TOOLBAR_DROPDOWN_WRAPPER_CLASS: string =
   'jp-ToolbarDropdown-wrapper';
 export const TOOLBAR_DROPDOWN_MENU_CLASS: string = 'jp-ToolbarDropdown-menu';
@@ -61,7 +63,7 @@ export class ToolbarDropdownComponent extends ReactWidget {
         }
       >
         <ToolbarButtonComponent
-          className={TOOLBAR_DROPDOWN_BUTTON_CLASS}
+          className={TOOLBAR_DROPDOWN_TOGGLE_CLASS}
           icon={this._props.icon}
           label={Private.resolveString(this._props.label, this._props.args)}
           onClick={() => this.toggleDropdownMenu()}
@@ -73,22 +75,30 @@ export class ToolbarDropdownComponent extends ReactWidget {
               (this._props.alignRight ? ' align-right' : '')
             }
           >
-            {this._props.commands.map(commandProps => {
-              return (
-                <li onClick={() => this.closeDropdownMenu()}>
-                  <CommandToolbarButtonComponent
-                    {...{
-                      ...commandProps,
-                      ...{
-                        caption: Private.resolveString(
-                          commandProps.caption,
-                          commandProps.args
-                        )
-                      }
-                    }}
-                  />
-                </li>
-              );
+            {this._props.dropdownItems.map(itemProps => {
+              if (itemProps.type === 'command') {
+                return (
+                  <li onClick={() => this.closeDropdownMenu()}>
+                    <CommandToolbarButtonComponent
+                      {...{
+                        ...itemProps,
+                        ...{
+                          caption: Private.resolveString(
+                            itemProps.caption,
+                            itemProps.args
+                          )
+                        }
+                      }}
+                    />
+                  </li>
+                );
+              } else {
+                return (
+                  <li className={TOOLBAR_DROPDOWN_SPACER_CLASS}>
+                    <hr />
+                  </li>
+                );
+              }
             })}
           </ul>
         )}
@@ -104,8 +114,24 @@ export namespace ToolbarDropdownComponent {
     icon?: LabIcon;
     label?: string | CommandRegistry.CommandFunc<string>;
     caption?: string | CommandRegistry.CommandFunc<string>;
-    commands: CommandToolbarButtonComponent.IProps[];
+    dropdownItems: (IDropdownCommandProps | IDropdownSpacerProps)[];
+    commands: CommandRegistry;
     alignRight?: boolean;
+  }
+
+  export interface IDropdownCommandProps {
+    id: string;
+    args?: ReadonlyJSONObject;
+    icon?: LabIcon;
+    label?: string | CommandRegistry.CommandFunc<string>;
+    caption?: string | CommandRegistry.CommandFunc<string>;
+    commands: CommandRegistry;
+    type: 'command';
+  }
+
+  export interface IDropdownSpacerProps {
+    id: string;
+    type: 'spacer';
   }
 }
 

@@ -42,7 +42,7 @@ export function ToolbarLabelComponent(
         />
       )}
       {props.label && (
-        <span className="jp-ToolbarButtonComponent-label">{label}</span>
+        <span className="jp-ToolbarLabelComponent-label">{label}</span>
       )}
     </div>
   );
