@@ -7,6 +7,8 @@ import { ToolbarLabel } from './toolbarLabel';
 import { PartialJSONObject } from '@lumino/coreutils';
 import { ToolbarDropdownComponent } from './toolbarDropdownComponent';
 
+const TOOLBAR_DROPDOWN_ITEM_DEFAULT_RANK = 50;
+
 /**
  * Create the default toolbar item widget factory
  *
@@ -92,7 +94,9 @@ export function createDefaultFactory(
                 label: cLabel,
                 caption: cCaption,
                 type: cType,
-                icon: cIcon
+                icon: cIcon,
+                rank: cRank,
+                disabled: cDisabled
               } = command;
               const id: string = typeof cId === 'string' ? cId : '';
               const args = { toolbar: true, ...(cArgs as PartialJSONObject) };
@@ -123,9 +127,16 @@ export function createDefaultFactory(
                 label,
                 type: cType ?? 'command',
                 caption: cCaption as string | undefined,
-                noFocusOnClick: toolbar?.noFocusOnClick ?? false
+                noFocusOnClick: toolbar?.noFocusOnClick ?? false,
+                rank:
+                  typeof cRank === 'number'
+                    ? cRank
+                    : TOOLBAR_DROPDOWN_ITEM_DEFAULT_RANK,
+                disabled: cDisabled === true
               };
             })
+            .filter(item => !item.disabled) // ignore disabled (hidden) dropdown items
+            .sort((itemA, itemB) => itemA.rank - itemB.rank) // sort dropdown items by their rank
         });
       }
       default: //everything else is handled by the original implementation
