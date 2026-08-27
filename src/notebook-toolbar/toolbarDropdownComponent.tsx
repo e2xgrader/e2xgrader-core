@@ -92,7 +92,7 @@ export class ToolbarDropdownComponent extends ReactWidget {
                     />
                   </li>
                 );
-              } else if(itemProps.type === 'spacer') {
+              } else if (itemProps.type === 'spacer') {
                 return (
                   <li className={TOOLBAR_DROPDOWN_SPACER_CLASS}>
                     <hr />

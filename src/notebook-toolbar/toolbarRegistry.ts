@@ -136,8 +136,10 @@ export function createDefaultFactory(
               };
             })
             .filter(item => {
-              if(!['command', 'spacer'].includes(item.type)) {
-                console.warn(`Toolbar dropdown item '${item.id}' cannot be displayed. It has no known type.`);
+              if (!['command', 'spacer'].includes(item.type)) {
+                console.warn(
+                  `Toolbar dropdown item '${item.id}' cannot be displayed. It has no known type.`
+                );
               }
               return !item.disabled;
             }) // ignore disabled (hidden) dropdown items
