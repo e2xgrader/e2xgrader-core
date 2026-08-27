@@ -1,6 +1,6 @@
 .jp-ToolbarDropdown {
   .jp-ToolbarDropdown-wrapper {
-    &.jp-ToolbarDropdown-active .jp-ToolbarDropdown-button {
+    &.jp-ToolbarDropdown-active .jp-ToolbarDropdown-toggle {
       background: var(--neutral-fill-stealth-active);
     }
 
@@ -21,11 +21,11 @@
         padding: 0 0.5rem 0.25rem;
 
         &.jp-ToolbarDropdown-spacer {
-          padding: 0.25rem 0.5rem;
+          padding: 0.25rem 0;
 
           hr {
             margin: 0;
-            color: var(--jp-ui-font-color2);
+            border: var(--jp-border-width) solid var(--jp-layout-color2);
           }
         }
 
