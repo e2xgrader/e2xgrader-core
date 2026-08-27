@@ -187,14 +187,14 @@ export class GradingCellModel {
   /**
    * indicates if linkable cells may be linked to this cell (to form a task)
    */
-  get isLinkTarget(): boolean {
+  get canBeLinkTarget(): boolean {
     return this.isManualGradingCell || this.isAutograderSolution || this.isTask;
   }
 
   /**
    * indicates if the cell may be linked to a link-target (to be part of a task)
    */
-  get isLinkable(): boolean {
+  get canBeLinkSource(): boolean {
     return this.isDescription || this.isAutograderTest;
   }
 
