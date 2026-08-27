@@ -1,24 +1,46 @@
 {
-  "title": "Custom Notebook Panel",
-  "description": "Custom Notebook Panel settings.",
+  "title": "Primary Notebook Panel Toolbar",
+  "description": "Primary Notebook Panel Toolbar settings.",
   "jupyter.lab.toolbars": {
     "Notebook": [
-      { "name": "save", "rank": 10 },
-      { "name": "run", "command": "runmenu:run", "rank": 30 },
-      { "name": "interrupt", "command": "kernelmenu:interrupt", "rank": 31 },
+      {
+        "name": "save",
+        "rank": 10
+      },
+      {
+        "name": "run",
+        "command": "runmenu:run",
+        "type": "command",
+        "rank": 30
+      },
+      {
+        "name": "interrupt",
+        "command": "kernelmenu:interrupt",
+        "type": "command",
+        "rank": 31
+      },
       {
         "name": "restart-and-run",
         "command": "notebook:restart-run-all",
+        "type": "command",
         "rank": 32
       },
       {
         "name": "clear-all-outputs",
         "command": "notebook:clear-all-cell-outputs",
+        "type": "command",
         "icon": "ui-components:clear",
         "rank": 33
       },
-      { "name": "spacer", "type": "spacer", "rank": 100 },
-      { "name": "executionProgress", "rank": 1002 }
+      {
+        "name": "spacer",
+        "type": "spacer",
+        "rank": 100
+      },
+      {
+        "name": "executionProgress",
+        "rank": 1002
+      }
     ]
   },
   "jupyter.lab.transform": true,
@@ -42,19 +64,82 @@
           "title": "Unique name",
           "type": "string"
         },
-        "args": {
-          "title": "Command arguments",
-          "type": "object"
+        "icon": {
+          "title": "Item icon id",
+          "description": "If defined, it will override the command icon",
+          "type": "string"
+        },
+        "label": {
+          "title": "Item label",
+          "description": "If defined, it will override the command label",
+          "type": "string"
+        },
+        "caption": {
+          "title": "Item caption",
+          "description": "If defined, it will override the command caption",
+          "type": "string"
+        },
+        "type": {
+          "title": "Item type",
+          "type": "string",
+          "enum": ["command", "spacer", "label", "dropdown"]
+        },
+        "rank": {
+          "title": "Item rank",
+          "type": "number",
+          "minimum": 0,
+          "default": 50
+        },
+        "disabled": {
+          "title": "disable item",
+          "type": "boolean",
+          "default": false
         },
         "command": {
           "title": "Command id",
           "type": "string",
           "default": ""
         },
-        "disabled": {
-          "title": "Whether the item is ignored or not",
+        "args": {
+          "title": "Command arguments",
+          "type": "object"
+        },
+        "dropdownItems": {
+          "title": "Dropdown commands",
+          "items": {
+            "$ref": "#/definitions/toolbarDropdownItem"
+          },
+          "type": "array",
+          "default": []
+        },
+        "alignRight": {
+          "title": "align dropdown menu to the right of the toggle button",
           "type": "boolean",
           "default": false
+        }
+      },
+      "required": ["name"],
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "toolbarDropdownItem": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/toolbarDropdownCommandItem",
+          "title": "Command Button"
+        },
+        {
+          "$ref": "#/definitions/toolbarDropdownSpacerItem",
+          "title": "Spacer"
+        }
+      ],
+      "type": "object"
+    },
+    "toolbarDropdownCommandItem": {
+      "properties": {
+        "name": {
+          "title": "Unique name",
+          "type": "string"
         },
         "icon": {
           "title": "Item icon id",
@@ -74,16 +159,59 @@
         "type": {
           "title": "Item type",
           "type": "string",
-          "enum": ["command", "spacer", "label"]
+          "enum": ["command"],
+          "default": "command"
         },
         "rank": {
           "title": "Item rank",
           "type": "number",
           "minimum": 0,
           "default": 50
+        },
+        "disabled": {
+          "title": "hide item",
+          "type": "boolean",
+          "default": false
+        },
+        "command": {
+          "title": "Command id",
+          "type": "string",
+          "default": ""
+        },
+        "args": {
+          "title": "Command arguments",
+          "type": "object"
         }
       },
-      "required": ["name"],
+      "required": ["name", "type"],
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "toolbarDropdownSpacerItem": {
+      "properties": {
+        "name": {
+          "title": "Unique name",
+          "type": "string"
+        },
+        "type": {
+          "title": "Item type",
+          "type": "string",
+          "enum": ["spacer"],
+          "default": "spacer"
+        },
+        "rank": {
+          "title": "Item rank",
+          "type": "number",
+          "minimum": 0,
+          "default": 50
+        },
+        "disabled": {
+          "title": "hide item",
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "required": ["name", "type"],
       "additionalProperties": false,
       "type": "object"
     }

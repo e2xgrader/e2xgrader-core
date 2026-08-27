@@ -1,0 +1,53 @@
+.jp-NotebookPanel {
+  .jp-NotebookPanel-toolbar {
+    z-index: 6000;
+  }
+
+  .jp-NotebookPanel-toolbar-secondary {
+    display: none;
+    contain: unset !important;
+    position: relative;
+    z-index: 5000;
+  }
+}
+
+body[data-notebook='notebooks'] .jp-NotebookPanel-toolbar-secondary {
+  padding-left: calc(calc(100% - var(--jp-notebook-max-width)) * 0.5);
+  padding-right: calc(calc(100% - var(--jp-notebook-max-width)) * 0.5);
+}
+
+.jp-NotebookPanel:has(
+  .jp-NotebookPanel-toolbar-secondary .jp-Toolbar-item:not(.lm-mod-hidden)
+) {
+  .jp-NotebookPanel-toolbar {
+    /* hide box shadow of the primary toolbar if secondary toolbar is displayed below */
+    box-shadow: none;
+  }
+
+  .jp-NotebookPanel-toolbar-secondary {
+    /* only show the toolbar if it contains any items that are not hidden */
+    display: unset;
+  }
+}
+
+.jp-ToolbarLabelComponent-label {
+  margin: 0 0.5rem;
+}
+
+.jp-ToolbarButtonComponent-label {
+  margin: 0 0.25rem;
+}
+
+.jp-FormGroup-content .form-group select.form-control {
+  font-family: var(--jp-ui-font-family);
+  font-size: var(--jp-content-font-size2);
+  border-color: var(--jp-input-border-color);
+  border-style: solid;
+  border-radius: var(--jp-border-radius);
+  border-width: 1px;
+  padding: 6px 8px;
+  background: none;
+  background-color: transparent;
+  color: var(--jp-ui-font-color0);
+  height: inherit;
+}
