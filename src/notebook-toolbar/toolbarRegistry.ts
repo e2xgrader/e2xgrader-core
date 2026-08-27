@@ -135,7 +135,12 @@ export function createDefaultFactory(
                 disabled: cDisabled === true
               };
             })
-            .filter(item => !item.disabled) // ignore disabled (hidden) dropdown items
+            .filter(item => {
+              if(!['command', 'spacer'].includes(item.type)) {
+                console.warn(`Toolbar dropdown item '${item.id}' cannot be displayed. It has no known type.`);
+              }
+              return !item.disabled;
+            }) // ignore disabled (hidden) dropdown items
             .sort((itemA, itemB) => itemA.rank - itemB.rank) // sort dropdown items by their rank
         });
       }
