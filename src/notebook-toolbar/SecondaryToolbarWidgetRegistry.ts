@@ -9,20 +9,6 @@ import {
  * this extended ToolbarWidgetRegistry allows special toolbar-widgets to be registered, that receive individual configuration from settings as 'toolbarItem'
  */
 export class SecondaryToolbarWidgetRegistry extends ToolbarWidgetRegistry {
-  createWidget(
-    widgetFactory: string,
-    widget: Widget,
-    toolbarItem: ToolbarRegistry.IWidget
-  ): Widget {
-    const factory = this._widgets.get(widgetFactory)?.get(toolbarItem.name);
-    if (factory) {
-      return (
-        factory as SecondaryToolbarWidgetRegistry.ToolbarWidgetFactory<Widget>
-      )(widget, toolbarItem);
-    }
-    return super.createWidget(widgetFactory, widget, toolbarItem);
-  }
-
   addFactory<T extends Widget>(
     widgetFactory: string,
     toolbarItemName: string,
