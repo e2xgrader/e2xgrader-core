@@ -72,7 +72,10 @@ export class NotebookWithSecondaryToolbarWidgetFactory extends NotebookWidgetFac
     context: DocumentRegistry.IContext<INotebookModel>,
     source?: NotebookPanel
   ): NotebookPanelWithSecondaryToolbar {
-    const widget: NotebookPanelWithSecondaryToolbar = super.createNew(context, source) as NotebookPanelWithSecondaryToolbar;
+    const widget: NotebookPanelWithSecondaryToolbar = super.createNew(
+      context,
+      source
+    ) as NotebookPanelWithSecondaryToolbar;
 
     setSecondaryToolbar(
       widget,

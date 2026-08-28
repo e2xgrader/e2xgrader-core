@@ -1,11 +1,14 @@
-import {initNotebookContext, NBTestUtils} from '@jupyterlab/notebook/lib/testutils';
-import {Context} from "@jupyterlab/docregistry";
-import {INotebookModel} from "@jupyterlab/notebook";
-import {JupyterServer} from "@jupyterlab/testing";
+import {
+  initNotebookContext,
+  NBTestUtils
+} from '@jupyterlab/notebook/lib/testutils';
+import { Context } from '@jupyterlab/docregistry';
+import { INotebookModel } from '@jupyterlab/notebook';
+import { JupyterServer } from '@jupyterlab/testing';
 import * as utils from './utils';
-import {NotebookWithSecondaryToolbarWidgetFactory} from "../../notebook-panel/NotebookWithSecondaryToolbarWidgetFactory";
-import {NotebookPanelWithSecondaryToolbar} from "../../notebook-panel/NotebookPanelWithSecondaryToolbar";
-import {ToolbarButton} from "@jupyterlab/ui-components";
+import { NotebookWithSecondaryToolbarWidgetFactory } from '../../notebook-panel/NotebookWithSecondaryToolbarWidgetFactory';
+import { NotebookPanelWithSecondaryToolbar } from '../../notebook-panel/NotebookPanelWithSecondaryToolbar';
+import { ToolbarButton } from '@jupyterlab/ui-components';
 
 const rendermime = NBTestUtils.defaultRenderMime();
 
@@ -34,7 +37,9 @@ describe('@e2xgrader/core', () => {
     describe('#constructor()', () => {
       it('should create a notebook-with-secondary-toolbar widget factory', () => {
         const factory = utils.createNotebookWithSecondaryToolbarWidgetFactory();
-        expect(factory).toBeInstanceOf(NotebookWithSecondaryToolbarWidgetFactory);
+        expect(factory).toBeInstanceOf(
+          NotebookWithSecondaryToolbarWidgetFactory
+        );
       });
     });
 
@@ -51,7 +56,8 @@ describe('@e2xgrader/core', () => {
         expect(panel.content.rendermime).not.toBe(rendermime);
       });
 
-      it('should populate the default primary toolbar items', () => { //just to make sure, that the primary toolbar still works
+      it('should populate the default primary toolbar items', () => {
+        //just to make sure, that the primary toolbar still works
         const factory = utils.createNotebookWithSecondaryToolbarWidgetFactory();
         const panel = factory.createNew(context);
         // It will only contain the popup opener
@@ -69,13 +75,16 @@ describe('@e2xgrader/core', () => {
         const primaryToolbarFactory = () => [
           { name: 'foo', widget: new ToolbarButton() },
           { name: 'bar', widget: new ToolbarButton() },
-          { name: 'baz', widget: new ToolbarButton() },
+          { name: 'baz', widget: new ToolbarButton() }
         ];
         const secondaryToolbarFactory = () => [
           { name: 'baz', widget: new ToolbarButton() },
           { name: 'qux', widget: new ToolbarButton() }
         ];
-        const factory = utils.createNotebookWithSecondaryToolbarWidgetFactory(primaryToolbarFactory, secondaryToolbarFactory);
+        const factory = utils.createNotebookWithSecondaryToolbarWidgetFactory(
+          primaryToolbarFactory,
+          secondaryToolbarFactory
+        );
         const panel = factory.createNew(context);
         const panel2 = factory.createNew(context);
         expect(Array.from(panel.toolbar.names())).toEqual([
