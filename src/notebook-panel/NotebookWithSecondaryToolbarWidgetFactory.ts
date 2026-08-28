@@ -17,7 +17,7 @@ import { ToolbarRegistry } from '@jupyterlab/apputils';
 export class NotebookWithSecondaryToolbarWidgetFactory extends NotebookWidgetFactory {
   private _secondaryToolbarFactory:
     | ((
-        widget: NotebookPanel
+        widget: NotebookPanelWithSecondaryToolbar
       ) =>
         | DocumentRegistry.IToolbarItem[]
         | IObservableList<DocumentRegistry.IToolbarItem>)
@@ -29,9 +29,9 @@ export class NotebookWithSecondaryToolbarWidgetFactory extends NotebookWidgetFac
    * @param options - The options used to construct the factory.
    */
   constructor(
-    options: NotebookWithSecondaryToolbarWidgetFactory.IOptions<NotebookPanel>
+    options: NotebookWithSecondaryToolbarWidgetFactory.IOptions<NotebookPanelWithSecondaryToolbar>
   ) {
-    super(options);
+    super(options as NotebookWidgetFactory.IOptions<NotebookPanel>);
     this._secondaryToolbarFactory = options.secondaryToolbarFactory;
   }
 
@@ -43,8 +43,8 @@ export class NotebookWithSecondaryToolbarWidgetFactory extends NotebookWidgetFac
    */
   protected override createNewWidget(
     context: DocumentRegistry.IContext<INotebookModel>,
-    source?: NotebookPanel
-  ): NotebookPanel {
+    source?: NotebookPanelWithSecondaryToolbar
+  ): NotebookPanelWithSecondaryToolbar {
     const translator = (context as any).translator;
     const kernelHistory = new NotebookHistory({
       sessionContext: context.sessionContext,
@@ -71,8 +71,8 @@ export class NotebookWithSecondaryToolbarWidgetFactory extends NotebookWidgetFac
   createNew(
     context: DocumentRegistry.IContext<INotebookModel>,
     source?: NotebookPanel
-  ): NotebookPanel {
-    const widget = super.createNew(context, source);
+  ): NotebookPanelWithSecondaryToolbar {
+    const widget: NotebookPanelWithSecondaryToolbar = super.createNew(context, source) as NotebookPanelWithSecondaryToolbar;
 
     setSecondaryToolbar(
       widget,
@@ -90,7 +90,7 @@ export class NotebookWithSecondaryToolbarWidgetFactory extends NotebookWidgetFac
 
 export namespace NotebookWithSecondaryToolbarWidgetFactory {
   export interface IOptions<
-    T extends NotebookPanel
+    T extends NotebookPanelWithSecondaryToolbar
   > extends NotebookWidgetFactory.IOptions<T> {
     readonly secondaryToolbarFactory?: (
       widget: T
