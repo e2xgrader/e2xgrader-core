@@ -45,6 +45,7 @@ jobs:
       with:
         report_paths: 'junit.xml'
         include_passed: 'true'
+        comment: 'true'
 
     - name: Build the extension
       run: |
