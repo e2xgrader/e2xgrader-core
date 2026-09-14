@@ -125,3 +125,4 @@ dmypy.json
 .yarn/
 
 .idea/
+junit.xml
