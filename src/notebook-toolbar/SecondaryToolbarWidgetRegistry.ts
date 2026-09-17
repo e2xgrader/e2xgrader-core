@@ -15,9 +15,17 @@ export class SecondaryToolbarWidgetRegistry extends ToolbarWidgetRegistry {
    * @param widget parent widget
    * @param toolbarItem settings of the toolbar-item
    */
-  createWidget(widgetFactory: string, widget: Widget, toolbarItem: ToolbarRegistry.IWidget): Widget {
+  createWidget(
+    widgetFactory: string,
+    widget: Widget,
+    toolbarItem: ToolbarRegistry.IWidget
+  ): Widget {
     const factory = this._widgets.get(widgetFactory)?.get(toolbarItem.name);
-    if(factory) return (factory as SecondaryToolbarWidgetRegistry.ToolbarWidgetFactory<Widget>)(widget, toolbarItem); //if a factory was registered -> call it and pass the parent widget as well es the widget's settings
+    if (factory) {
+      return (
+        factory as SecondaryToolbarWidgetRegistry.ToolbarWidgetFactory<Widget>
+      )(widget, toolbarItem);
+    } //if a factory was registered -> call it and pass the parent widget as well es the widget's settings
     return super.createWidget(widgetFactory, widget, toolbarItem);
   }
 

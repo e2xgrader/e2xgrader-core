@@ -2,7 +2,7 @@ import { SecondaryToolbarWidgetRegistry } from '../../notebook-toolbar/Secondary
 import { JupyterServer } from '@jupyterlab/testing';
 import { ToolbarRegistry } from '@jupyterlab/apputils';
 import { PRIMARY_NOTEBOOK_TOOLBAR_FACTORY_ID } from '../../notebook-toolbar/widgetFactory';
-import {Widget} from "@lumino/widgets";
+import { Widget } from '@lumino/widgets';
 
 const server = new JupyterServer();
 
