@@ -28,7 +28,7 @@ describe('@jupyterlab/apputils', () => {
     });
 
     describe('#createWidget', () => {
-      it('should call the default factory as fallback', () => {
+      it('should call the default factory as fallback', () => { //test if the default factory still works after overloading createWidget()
         const documentWidget = new Widget();
         const dummyWidget = new Widget();
         const dummy = jest.fn().mockReturnValue(dummyWidget);
@@ -64,7 +64,7 @@ describe('@jupyterlab/apputils', () => {
         const widget = registry.createWidget('factory', documentWidget, item);
 
         expect(widget).toBe(dummyWidget);
-        expect(dummy).toHaveBeenCalledWith(documentWidget, item);
+        expect(dummy).toHaveBeenCalledWith(documentWidget, item); // verify instantiation with passed settings (parameter "item")
         expect(defaultFactory).toHaveBeenCalledTimes(0);
       });
     });
