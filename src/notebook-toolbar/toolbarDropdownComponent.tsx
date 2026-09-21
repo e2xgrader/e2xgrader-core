@@ -72,7 +72,7 @@ export class ToolbarDropdownComponent extends ReactWidget {
           <ul
             className={
               TOOLBAR_DROPDOWN_MENU_CLASS +
-              (this._props.alignRight ? ' align-right' : '')
+              (this._props.openToLeft ? ' align-right' : '')
             }
           >
             {this._props.dropdownItems.map(itemProps => {
@@ -116,7 +116,7 @@ export namespace ToolbarDropdownComponent {
     caption?: string | CommandRegistry.CommandFunc<string>;
     dropdownItems: (IDropdownCommandProps | IDropdownSpacerProps)[];
     commands: CommandRegistry;
-    alignRight?: boolean;
+    openToLeft?: boolean;
   }
 
   export interface IDropdownCommandProps {
