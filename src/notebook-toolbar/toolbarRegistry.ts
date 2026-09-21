@@ -58,7 +58,7 @@ export function createDefaultFactory(
           args: tArgs,
           label: tLabel,
           caption: tCaption,
-          alignRight: tAlignRight,
+          openToRight: tOpenToRight,
           icon: tIcon,
           dropdownItems: tDropdownItems
         } = toolbarItem;
@@ -83,7 +83,7 @@ export function createDefaultFactory(
           icon,
           label: label as string,
           caption: tCaption as string,
-          alignRight: tAlignRight === true,
+          openToRight: tOpenToRight === true,
           commands,
           dropdownItems: entries
             .filter(val => !!val)
