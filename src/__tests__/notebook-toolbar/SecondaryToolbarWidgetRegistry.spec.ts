@@ -2,6 +2,7 @@ import { SecondaryToolbarWidgetRegistry } from '../../notebook-toolbar/Secondary
 import { JupyterServer } from '@jupyterlab/testing';
 import { ToolbarRegistry } from '@jupyterlab/apputils';
 import { PRIMARY_NOTEBOOK_TOOLBAR_FACTORY_ID } from '../../notebook-toolbar/widgetFactory';
+import { Widget } from '@lumino/widgets';
 
 const server = new JupyterServer();
 
@@ -23,6 +24,49 @@ describe('@jupyterlab/apputils', () => {
         });
 
         expect(registry.defaultFactory).toBe(dummy);
+      });
+    });
+
+    describe('#createWidget', () => {
+      it('should call the default factory as fallback', () => {
+        //test if the default factory still works after overloading createWidget()
+        const documentWidget = new Widget();
+        const dummyWidget = new Widget();
+        const dummy = jest.fn().mockReturnValue(dummyWidget);
+        const registry = new SecondaryToolbarWidgetRegistry({
+          defaultFactory: dummy
+        });
+
+        const item: ToolbarRegistry.IWidget = {
+          name: 'test'
+        };
+
+        const widget = registry.createWidget('factory', documentWidget, item);
+
+        expect(widget).toBe(dummyWidget);
+        expect(dummy).toHaveBeenCalledWith('factory', documentWidget, item);
+      });
+
+      it('should call the registered factory with toolbar-item settings', () => {
+        const documentWidget = new Widget();
+        const dummyWidget = new Widget();
+        const defaultFactory = jest.fn().mockReturnValue(dummyWidget);
+        const dummy = jest.fn().mockReturnValue(dummyWidget);
+        const registry = new SecondaryToolbarWidgetRegistry({
+          defaultFactory
+        });
+
+        const item: ToolbarRegistry.IWidget = {
+          name: 'test'
+        };
+
+        registry.addFactory('factory', item.name, dummy);
+
+        const widget = registry.createWidget('factory', documentWidget, item);
+
+        expect(widget).toBe(dummyWidget);
+        expect(dummy).toHaveBeenCalledWith(documentWidget, item); // verify instantiation with passed settings (parameter "item")
+        expect(defaultFactory).toHaveBeenCalledTimes(0);
       });
     });
 
