@@ -28,7 +28,8 @@ describe('@jupyterlab/apputils', () => {
     });
 
     describe('#createWidget', () => {
-      it('should call the default factory as fallback', () => { //test if the default factory still works after overloading createWidget()
+      it('should call the default factory as fallback', () => {
+        //test if the default factory still works after overloading createWidget()
         const documentWidget = new Widget();
         const dummyWidget = new Widget();
         const dummy = jest.fn().mockReturnValue(dummyWidget);
