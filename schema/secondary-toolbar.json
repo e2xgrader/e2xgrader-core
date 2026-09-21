@@ -73,8 +73,8 @@
           "type": "array",
           "default": []
         },
-        "openToRight": {
-          "title": "align dropdown menu to the right of the toggle button",
+        "openToLeft": {
+          "title": "Open the dropdown menu to the left of the toggle button",
           "type": "boolean",
           "default": false
         }
