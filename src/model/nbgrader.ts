@@ -1,6 +1,5 @@
 export namespace NbgraderMetadata {
   export interface INbgraderMetadata {
-    cell_type?: string;
     checksum?: string;
     solution: boolean;
     task: boolean;
