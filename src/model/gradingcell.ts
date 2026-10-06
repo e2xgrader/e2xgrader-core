@@ -1,10 +1,11 @@
-import { ISharedCell, SharedCell } from '@jupyter/ydoc';
+import { IMapChange, ISharedCell, SharedCell } from '@jupyter/ydoc';
 import {
   NbgraderMetadata,
   NbgraderCellType,
   NbgraderCellTypes
 } from './nbgrader';
 import { E2xGraderMetadata } from './e2xgrader';
+import { ISignal } from '@lumino/signaling';
 
 export class GradingCellModel {
   private readonly _cell: ISharedCell;
@@ -56,6 +57,13 @@ export class GradingCellModel {
       nestedKey,
       value
     );
+  }
+
+  /**
+   * unique ID of the cell
+   */
+  get id(): string {
+    return this._cell.id;
   }
 
   get nbgraderMetadata(): NbgraderMetadata.INbgraderMetadata | undefined {
@@ -122,6 +130,14 @@ export class GradingCellModel {
     this.setNbgraderMetadataKey('points', value);
   }
 
+  get task(): E2xGraderMetadata.IE2xGraderTaskMetadata | undefined {
+    return this.e2xgraderMetadata?.task;
+  }
+
+  set task(task: E2xGraderMetadata.IE2xGraderTaskMetadata | undefined) {
+    this.setE2xgraderMetadataKey('task', task);
+  }
+
   get e2xgraderType(): string | undefined {
     return this.e2xgraderMetadata?.type;
   }
@@ -151,6 +167,17 @@ export class GradingCellModel {
 
   get isManualGradingCell(): boolean {
     return this.matchesCellType(NbgraderCellType.MANUALLY_GRADED_ANSWER);
+  }
+
+  /**
+   * indicates if the cell may have points assigned to it
+   */
+  get hasPoints(): boolean {
+    return this.isAutograderTest || this.isManualGradingCell || this.isTask;
+  }
+
+  get metadataChanged(): ISignal<ISharedCell, IMapChange> {
+    return this._cell.metadataChanged;
   }
 
   toJSON(): SharedCell.Cell {
