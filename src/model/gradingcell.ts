@@ -6,7 +6,7 @@ import {
 } from './nbgrader';
 import { E2xGraderMetadata } from './e2xgrader';
 import { ISignal } from '@lumino/signaling';
-import {E2xGraderCellRegistry} from "../cell_registry/registry";
+import { E2xGraderCellRegistry } from '../cell_registry/registry';
 
 export class GradingCellModel {
   private readonly _cell: ISharedCell;
@@ -203,7 +203,8 @@ export class GradingCellModel {
     if (this.points) {
       newNbGraderMetaData.points = this.points;
     } //keep points
-    if (this.gradeId) { //todo: remove this when the grade_id is deemed obsolete
+    if (this.gradeId) {
+      //todo: remove this when the grade_id is deemed obsolete
       newNbGraderMetaData.grade_id = this.gradeId;
     } //keep grade_id
     this.setMetadata(NbgraderMetadata.NBGRADER_METADATA_KEY, {
@@ -218,7 +219,7 @@ export class GradingCellModel {
   ): void {
     const newE2xGraderMetaData: E2xGraderMetadata.IE2xGraderMetadata =
       E2xGraderMetadata.E2X_METADATA_DEFAULTS;
-      newE2xGraderMetaData.task = this.task; //keep the task metadata
+    newE2xGraderMetaData.task = this.task; //keep the task metadata
     if (newCellType && cellRegistry) {
       newE2xGraderMetaData.type = newCellType;
       this.setMetadata(E2xGraderMetadata.E2XGRADER_METADATA_KEY, {
