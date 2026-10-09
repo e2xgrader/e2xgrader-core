@@ -136,3 +136,4 @@ export * from './notebook-toolbar/SecondaryToolbarWidgetRegistry';
 export * from './notebook-toolbar/widgetFactory';
 export * from './apis/SharedMaterialsAPI';
 export * from './apis/AssignmentListAPI';
+export * from './CellPresets';
