@@ -200,8 +200,8 @@ export interface INbGraderAssignment {
 }
 
 export namespace NbGraderAutograding {
-  export const SOLUTION_START_SEQUENCE = '### BEGIN SOLUTION';
-  export const SOLUTION_END_SEQUENCE = '### END SOLUTION';
-  export const TEST_START_SEQUENCE = '### BEGIN HIDDEN TESTS';
-  export const TEST_END_SEQUENCE = '### END HIDDEN TESTS';
+  export const SOLUTION_START_DELIMITER = '### BEGIN SOLUTION';
+  export const SOLUTION_END_DELIMITER = '### END SOLUTION';
+  export const TEST_START_DELIMITER = '### BEGIN HIDDEN TESTS';
+  export const TEST_END_DELIMITER = '### END HIDDEN TESTS';
 }
