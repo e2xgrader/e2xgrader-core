@@ -4,7 +4,7 @@ import { UUID } from '@lumino/coreutils';
  * Namespace containing interfaces and constants related to E2x metadata.
  */
 export namespace E2xGraderMetadata {
-  export const E2XGRADER_METADATA_KEY = 'extended_cell';
+  export const E2XGRADER_METADATA_KEY: string = 'extended_cell';
   /**
    * Interface representing the structure of E2x metadata.
    */
@@ -71,10 +71,15 @@ export namespace E2xGraderMetadata {
     return UUID.uuid4();
   }
 
-  export function getNewTaskMetadata(): E2xGraderMetadata.IE2xGraderTaskMetadata {
+  export function getNewTaskMetadata(initialValues?: {
+    id?: string;
+    name?: string;
+    parent_id?: string;
+  }): E2xGraderMetadata.IE2xGraderTaskMetadata {
     return {
-      id: getNewTaskId(),
-      name: ''
+      id: initialValues?.id ?? getNewTaskId(),
+      name: initialValues?.name ?? '',
+      parent_id: initialValues?.parent_id ?? undefined
     };
   }
 }

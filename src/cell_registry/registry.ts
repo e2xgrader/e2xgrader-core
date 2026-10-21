@@ -2,6 +2,8 @@ import { Token } from '@lumino/coreutils';
 import { ISignal, Signal } from '@lumino/signaling';
 import { Widget } from '@lumino/widgets';
 import { E2XMarkdownCell } from './cell';
+import { E2xGraderSharedCell } from '../CellPresets';
+import { E2xGraderMetadata } from '../model/e2xgrader';
 
 export namespace E2xGraderCellRegistry {
   export type E2xRenderCellFunction = (
@@ -14,6 +16,10 @@ export namespace E2xGraderCellRegistry {
     label: string;
     renderCell: E2xRenderCellFunction;
     cleanMetadata: Record<string, any>;
+    getTaskPreset: (
+      task?: E2xGraderMetadata.IE2xGraderTaskMetadata,
+      points?: number
+    ) => E2xGraderSharedCell[];
   }
 
   export const IE2xGraderCellRegistry = new Token<IE2xGraderCellRegistry>(

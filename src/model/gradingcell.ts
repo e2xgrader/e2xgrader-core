@@ -6,6 +6,7 @@ import {
 } from './nbgrader';
 import { E2xGraderMetadata } from './e2xgrader';
 import { ISignal } from '@lumino/signaling';
+import { E2xGraderCellRegistry } from '../cell_registry/registry';
 
 export class GradingCellModel {
   private readonly _cell: ISharedCell;
@@ -178,6 +179,63 @@ export class GradingCellModel {
 
   get metadataChanged(): ISignal<ISharedCell, IMapChange> {
     return this._cell.metadataChanged;
+  }
+
+  switchToCellType(
+    cellRegistry: E2xGraderCellRegistry.IE2xGraderCellRegistry | undefined,
+    newCellType: string
+  ): void {
+    if ((Object.values(NbgraderCellType) as string[]).includes(newCellType)) {
+      this.setNbGraderCellType(newCellType as NbgraderCellType);
+      this.setE2xGraderCellType(cellRegistry, undefined);
+    } else if (cellRegistry?.getPluginTypes().includes(newCellType)) {
+      this.setNbGraderCellType(NbgraderCellType.MANUALLY_GRADED_ANSWER);
+      this.setE2xGraderCellType(cellRegistry, newCellType);
+    } else {
+      this.removeE2xgraderMetadata();
+      this.removeNbgraderMetadata();
+    }
+  }
+
+  setNbGraderCellType(newCellType: NbgraderCellType): void {
+    const newNbGraderMetaData: NbgraderMetadata.INbgraderMetadata =
+      NbgraderMetadata.newNbGraderMetadata();
+    if (this.points) {
+      newNbGraderMetaData.points = this.points;
+    } //keep points
+    if (this.gradeId) {
+      //todo: remove this when the grade_id is deemed obsolete
+      newNbGraderMetaData.grade_id = this.gradeId;
+    } //keep grade_id
+    this.setMetadata(NbgraderMetadata.NBGRADER_METADATA_KEY, {
+      ...newNbGraderMetaData,
+      ...NbgraderCellTypes.cellTypeConfigurations[newCellType]
+    });
+  }
+
+  setE2xGraderCellType(
+    cellRegistry: E2xGraderCellRegistry.IE2xGraderCellRegistry | undefined,
+    newCellType: string | undefined
+  ): void {
+    const newE2xGraderMetaData: E2xGraderMetadata.IE2xGraderMetadata =
+      E2xGraderMetadata.E2X_METADATA_DEFAULTS;
+    newE2xGraderMetaData.task = this.task; //keep the task metadata
+    if (newCellType && cellRegistry) {
+      newE2xGraderMetaData.type = newCellType;
+      this.setMetadata(E2xGraderMetadata.E2XGRADER_METADATA_KEY, {
+        ...newE2xGraderMetaData,
+        ...(
+          cellRegistry.getPlugin(
+            newCellType
+          ) as E2xGraderCellRegistry.IE2xGraderCellPlugin
+        ).cleanMetadata
+      });
+    } else {
+      this.setMetadata(
+        E2xGraderMetadata.E2XGRADER_METADATA_KEY,
+        newE2xGraderMetaData
+      );
+    }
   }
 
   toJSON(): SharedCell.Cell {

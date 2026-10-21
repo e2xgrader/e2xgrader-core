@@ -198,3 +198,10 @@ export interface INbGraderAssignment {
   path: string;
   notebooks: INbGraderNotebook[];
 }
+
+export namespace NbGraderAutograding {
+  export const SOLUTION_START_DELIMITER = '### BEGIN SOLUTION';
+  export const SOLUTION_END_DELIMITER = '### END SOLUTION';
+  export const TEST_START_DELIMITER = '### BEGIN HIDDEN TESTS';
+  export const TEST_END_DELIMITER = '### END HIDDEN TESTS';
+}
