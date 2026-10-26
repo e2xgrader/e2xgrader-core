@@ -218,7 +218,7 @@ export class GradingCellModel {
     newCellType: string | undefined
   ): void {
     const newE2xGraderMetaData: E2xGraderMetadata.IE2xGraderMetadata =
-      E2xGraderMetadata.E2X_METADATA_DEFAULTS;
+      E2xGraderMetadata.getNewE2xGraderMetadata();
     newE2xGraderMetaData.task = this.task; //keep the task metadata
     if (newCellType && cellRegistry) {
       newE2xGraderMetaData.type = newCellType;

@@ -35,7 +35,7 @@ export class CellPresets {
   ): IE2xCellMetadata {
     return {
       [E2xGraderMetadata.E2XGRADER_METADATA_KEY]: {
-        ...E2xGraderMetadata.E2X_METADATA_DEFAULTS,
+        ...E2xGraderMetadata.getNewE2xGraderMetadata(),
         ...(e2xgraderCellType ? { type: e2xgraderCellType } : {}),
         ...(task ? { task: task } : {})
       },

@@ -58,11 +58,13 @@ export namespace E2xGraderMetadata {
   /**
    * Default values for E2x metadata.
    */
-  export const E2X_METADATA_DEFAULTS: IE2xGraderMetadata = {
-    schema_version: '0.1',
-    type: undefined,
-    options: {}
-  };
+  export function getNewE2xGraderMetadata(): IE2xGraderMetadata {
+    return {
+      schema_version: '0.1',
+      type: undefined,
+      options: {}
+    };
+  }
 
   /**
    * centralized task-id generator to enforce a standardized id-format

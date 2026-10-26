@@ -120,7 +120,7 @@ export class E2XMarkdownCell extends MarkdownCell {
    * @returns {Partial<E2xMetadata.IE2xMetadata>} The default metadata values.
    */
   protected get metadataDefaults(): Partial<E2xGraderMetadata.IE2xGraderMetadata> {
-    return E2xGraderMetadata.E2X_METADATA_DEFAULTS;
+    return E2xGraderMetadata.getNewE2xGraderMetadata();
   }
 
   get e2xMetadata(): any {
